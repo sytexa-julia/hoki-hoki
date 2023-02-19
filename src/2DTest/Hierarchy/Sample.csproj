@@ -1,0 +1,145 @@
+<VisualStudioProject>
+    <CSHARP
+        ProjectType = "Local"
+        ProductVersion = "7.10.3077"
+        SchemaVersion = "2.0"
+        ProjectGuid = "{6FE83433-7AFC-4946-8609-240EFB0D16FC}"
+    >
+        <Build>
+            <Settings
+                ApplicationIcon = "App.ico"
+                AssemblyKeyContainerName = ""
+                AssemblyName = "Hierarchy"
+                AssemblyOriginatorKeyFile = ""
+                DefaultClientScript = "JScript"
+                DefaultHTMLPageLayout = "Grid"
+                DefaultTargetSchema = "IE50"
+                DelaySign = "false"
+                OutputType = "WinExe"
+                PreBuildEvent = ""
+                PostBuildEvent = ""
+                RootNamespace = "Hierarchy"
+                RunPostBuildEvent = "OnBuildSuccess"
+                StartupObject = ""
+            >
+                <Config
+                    Name = "Debug"
+                    AllowUnsafeBlocks = "false"
+                    BaseAddress = "285212672"
+                    CheckForOverflowUnderflow = "false"
+                    ConfigurationOverrideFile = ""
+                    DefineConstants = "DEBUG;TRACE"
+                    DocumentationFile = ""
+                    DebugSymbols = "true"
+                    FileAlignment = "4096"
+                    IncrementalBuild = "false"
+                    NoStdLib = "false"
+                    NoWarn = ""
+                    Optimize = "false"
+                    OutputPath = "bin\Debug\"
+                    RegisterForComInterop = "false"
+                    RemoveIntegerChecks = "false"
+                    TreatWarningsAsErrors = "false"
+                    WarningLevel = "4"
+                />
+                <Config
+                    Name = "Release"
+                    AllowUnsafeBlocks = "false"
+                    BaseAddress = "285212672"
+                    CheckForOverflowUnderflow = "false"
+                    ConfigurationOverrideFile = ""
+                    DefineConstants = "TRACE"
+                    DocumentationFile = ""
+                    DebugSymbols = "false"
+                    FileAlignment = "4096"
+                    IncrementalBuild = "false"
+                    NoStdLib = "false"
+                    NoWarn = ""
+                    Optimize = "true"
+                    OutputPath = "bin\Release\"
+                    RegisterForComInterop = "false"
+                    RemoveIntegerChecks = "false"
+                    TreatWarningsAsErrors = "false"
+                    WarningLevel = "4"
+                />
+            </Settings>
+            <References>
+                <Reference
+                    Name = "System"
+                    AssemblyName = "System"
+                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.dll"
+                />
+                <Reference
+                    Name = "System.Data"
+                    AssemblyName = "System.Data"
+                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Data.dll"
+                />
+                <Reference
+                    Name = "System.Drawing"
+                    AssemblyName = "System.Drawing"
+                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Drawing.dll"
+                />
+                <Reference
+                    Name = "System.Windows.Forms"
+                    AssemblyName = "System.Windows.Forms"
+                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Windows.Forms.dll"
+                />
+                <Reference
+                    Name = "System.XML"
+                    AssemblyName = "System.XML"
+                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.XML.dll"
+                />
+                <Reference
+                    Name = "Trans2D"
+                    AssemblyName = "Trans2D"
+                    HintPath = "..\..\2D\bin\Debug\Trans2D.dll"
+                />
+                <Reference
+                    Name = "Microsoft.DirectX"
+                    AssemblyName = "Microsoft.DirectX"
+                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.dll"
+                    AssemblyFolderKey = "hklm\dn\dx_1.0.2902.0"
+                />
+                <Reference
+                    Name = "Microsoft.DirectX.Direct3D"
+                    AssemblyName = "Microsoft.DirectX.Direct3D"
+                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.Direct3D.dll"
+                    AssemblyFolderKey = "hklm\dn\dx_1.0.2902.0"
+                />
+                <Reference
+                    Name = "Microsoft.DirectX.Direct3DX"
+                    AssemblyName = "Microsoft.DirectX.Direct3DX"
+                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2905.0\Microsoft.DirectX.Direct3DX.dll"
+                    AssemblyFolderKey = "hklm\dn\dx_1.0.2905.0"
+                />
+            </References>
+        </Build>
+        <Files>
+            <Include>
+                <File
+                    RelPath = "App.ico"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "AssemblyInfo.cs"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Form.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Form.resx"
+                    DependentUpon = "Form.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\circle.png"
+                    BuildAction = "EmbeddedResource"
+                />
+            </Include>
+        </Files>
+    </CSHARP>
+</VisualStudioProject>
+

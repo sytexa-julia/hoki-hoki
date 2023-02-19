@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D2DTest", "D2DTest.csproj", "{D6E48C76-2A44-41DA-8C98-DB619242CE62}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trans2D", "..\2D\Trans2D.csproj", "{7F99678B-7093-4906-8E42-0E084873B07F}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{D6E48C76-2A44-41DA-8C98-DB619242CE62}.Debug.ActiveCfg = Debug|.NET
+		{D6E48C76-2A44-41DA-8C98-DB619242CE62}.Debug.Build.0 = Debug|.NET
+		{D6E48C76-2A44-41DA-8C98-DB619242CE62}.Release.ActiveCfg = Release|.NET
+		{D6E48C76-2A44-41DA-8C98-DB619242CE62}.Release.Build.0 = Release|.NET
+		{7F99678B-7093-4906-8E42-0E084873B07F}.Debug.ActiveCfg = Debug|.NET
+		{7F99678B-7093-4906-8E42-0E084873B07F}.Debug.Build.0 = Debug|.NET
+		{7F99678B-7093-4906-8E42-0E084873B07F}.Release.ActiveCfg = Release|.NET
+		{7F99678B-7093-4906-8E42-0E084873B07F}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

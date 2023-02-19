@@ -1,0 +1,14 @@
+TODO
+
+- ARTIST ARTIST ARTIST ARTIST!!!!
+- Smooth out the difficulty curve
+- See if anyone on Flecko.net wants to make levels (challenge thingy)
+- Make a website!
+- Help / Control info
+- Sentenced song class?
+- Sound FX
+- Check vertical spring collision detection
+
+
+FOR THE LOVE OF GOD REMEMBER TO NULLIFY ERRMENU OR ELSE YOU'LL END UP
+WASTING A DAY FINDING IT WITH THE CLR PROFILER YOU DOLT

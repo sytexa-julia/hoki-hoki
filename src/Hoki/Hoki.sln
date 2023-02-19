@@ -1,0 +1,43 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FloatMath", "..\FloatMath\FloatMath.csproj", "{7A4827BD-2462-4E4D-BCE1-E7D3A8ED3B54}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hoki", "Hoki.csproj", "{882D7495-BF7D-4A2C-B123-CCD2469235E7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriteUtilities", "..\SpriteUtilities\SpriteUtilities.csproj", "{C7E15C1D-8AAA-4374-B78E-32A04A4F4DB9}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "HokiSetup", "..\HokiSetup\HokiSetup.vdproj", "{54E0D0FB-C750-4546-91CA-FAD2FE5BD6A4}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{7A4827BD-2462-4E4D-BCE1-E7D3A8ED3B54}.Debug.ActiveCfg = Debug|.NET
+		{7A4827BD-2462-4E4D-BCE1-E7D3A8ED3B54}.Debug.Build.0 = Debug|.NET
+		{7A4827BD-2462-4E4D-BCE1-E7D3A8ED3B54}.Release.ActiveCfg = Release|.NET
+		{7A4827BD-2462-4E4D-BCE1-E7D3A8ED3B54}.Release.Build.0 = Release|.NET
+		{882D7495-BF7D-4A2C-B123-CCD2469235E7}.Debug.ActiveCfg = Debug|.NET
+		{882D7495-BF7D-4A2C-B123-CCD2469235E7}.Debug.Build.0 = Debug|.NET
+		{882D7495-BF7D-4A2C-B123-CCD2469235E7}.Release.ActiveCfg = Release|.NET
+		{882D7495-BF7D-4A2C-B123-CCD2469235E7}.Release.Build.0 = Release|.NET
+		{C7E15C1D-8AAA-4374-B78E-32A04A4F4DB9}.Debug.ActiveCfg = Debug|.NET
+		{C7E15C1D-8AAA-4374-B78E-32A04A4F4DB9}.Debug.Build.0 = Debug|.NET
+		{C7E15C1D-8AAA-4374-B78E-32A04A4F4DB9}.Release.ActiveCfg = Release|.NET
+		{C7E15C1D-8AAA-4374-B78E-32A04A4F4DB9}.Release.Build.0 = Release|.NET
+		{54E0D0FB-C750-4546-91CA-FAD2FE5BD6A4}.Debug.ActiveCfg = Debug
+		{54E0D0FB-C750-4546-91CA-FAD2FE5BD6A4}.Release.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

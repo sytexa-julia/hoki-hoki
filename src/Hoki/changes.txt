@@ -1,0 +1,10 @@
+Added: Edges sharpened at pendant nodes
+Added: Music toggle button
+Added: Easy mode
+Added: Animated springs
+Added: Key help display
+Fixed: spring sticking
+Fixed: NRE caused by SpriteTriFan
+Fixed: Crash when loading a level with no walls
+
+Debug: F6 for layout of all maps

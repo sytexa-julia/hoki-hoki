@@ -1,0 +1,101 @@
+
++------------+
+| MAP FORMAT |
++------------+
+
+Maps are stored as text files. The files are meant to be broken down line-by-line by a map reader (ie. split on '\n'). There are three main types of
+lines:
+
+1. Directives
+
+These lines begin with a # sign, followed by some string identifying the type of information being given, then a space and a value:
+
+#DECL_NAME VALUE
+
+There are two in use: #NODECOUNT specifies the number of nodes in the map, and #POLYCOUNT specifies the number of triangles. In the future, author, date,
+and theme fields will be added.
+
+2. Modes
+
+These lines begin with a > sign, followed by a string identifying the mode to set:
+
+>MODE
+
+They tell the map reader how to interpret the data in subsequent lines. The modes are NODES, TRIANGLES, LINES, and PADS. They must always appear in the 
+file in that order.
+
+3. Values
+
+Values are a sequence of comma-delimited numbers:
+
+NUMBER,NUMBER,...
+
+Their meaning depends on whatever the last mode line was. The formats for different modes are listed below:
+
+NODES:		X,Y
+TRIANGLES:	NODE0,NODE1,NODE2
+LINES:		NODE0,NODE1
+PADS:		X,Y,TYPE
+
+For lines and triangles, the numbers listed are the indices of nodes in the NODES section.
+
+For pads, the TYPE values are: 0 - Start, 1 - End, 2 - Heal
+
+
++-----------------+
+| USERFILE FORMAT |
++-----------------+
+
+Recorded information about individual users is recorded in a text file. In order to prevent users from tampering with this, the file might be encrypted,
+but that is up to the program's implementation.
+
+There are three types of lines:
+
+1. Usernames
+
+These begin with a # symbol, followed by the player's name, and indicate that the following lines apply to that player:
+
+#PLAYERNAME
+
+2.Scores
+
+The file contains one score per line. The facts are in the format
+
+LEVEL:BEST_TIME:PERFECT
+
+Where LEVEL is some unique function of the map file that the time applies to (for example, an MD5 hash), BEST_TIME is the number of milliseconds that the
+user took to complete the level on his or her best attempt, and PERFECT is a 0 or 1 indicating whether the player got through the level without hitting
+anything (not necessarily on the same run as the best time was achieved). The absence of a level from the file implies that the user did not complete it.
+
+3. Options
+
+These begin with a > symbol. They are options that only affect an individual player (unlike the ones in the config file). They are in the following format:
+
+>OPTIONNAME:VALUE
+
+The options in use are:
+
+EASY, for easy mode, where the value 1 means use easy and 0 means use normal.
+
++------------------+
+| SCOREFILE FORMAT |
++------------------+
+
+The top scores for each level (common between all users) are recorded in a text file. In order to prevent users from tampering with this, the file might
+be encrypted, but that is up to the program's implementation.
+
+The file is meant to be read line-by-line. There are two types of lines:
+
+1. Levels
+
+These begin with a > symbol, followed by some unique funtion of the level that the following scores apply to (for example, an MD5 hash):
+
+>LEVEL
+
+2. Scores
+
+These are in the format:
+
+PLAYER_NAME:TIME
+
+Where TIME is the number of milliseconds it took the player to complete the level. These should be sorted by ascending time.

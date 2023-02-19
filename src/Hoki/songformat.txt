@@ -1,0 +1,23 @@
+format for a song file:
+
+-----------------------------
+
+number of separate sound files
+soundfile 1
+soundfile 2
+...
+soundfile n
+sound1 numberloops
+sound2 numberloops
+...
+soundn numberloops
+
+-----------------------------
+
+sounds are indexed by the order they're listed in the file, so if you want to
+play the second sample twice and then the first sample three times you'd write
+
+1 2
+0 3
+
+the program assumes there's no blank lines.

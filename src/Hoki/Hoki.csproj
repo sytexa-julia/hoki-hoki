@@ -1,0 +1,1285 @@
+<VisualStudioProject>
+    <CSHARP
+        ProjectType = "Local"
+        ProductVersion = "7.10.3077"
+        SchemaVersion = "2.0"
+        ProjectGuid = "{882D7495-BF7D-4A2C-B123-CCD2469235E7}"
+    >
+        <Build>
+            <Settings
+                ApplicationIcon = "hoki.ico"
+                AssemblyKeyContainerName = ""
+                AssemblyName = "Hoki"
+                AssemblyOriginatorKeyFile = ""
+                DefaultClientScript = "JScript"
+                DefaultHTMLPageLayout = "Grid"
+                DefaultTargetSchema = "IE50"
+                DelaySign = "false"
+                OutputType = "WinExe"
+                PreBuildEvent = ""
+                PostBuildEvent = ""
+                RootNamespace = "Hoki"
+                RunPostBuildEvent = "OnBuildSuccess"
+                StartupObject = "Hoki.Game"
+            >
+                <Config
+                    Name = "Debug"
+                    AllowUnsafeBlocks = "true"
+                    BaseAddress = "285212672"
+                    CheckForOverflowUnderflow = "false"
+                    ConfigurationOverrideFile = ""
+                    DefineConstants = "DEBUG;TRACE"
+                    DocumentationFile = ""
+                    DebugSymbols = "true"
+                    FileAlignment = "4096"
+                    IncrementalBuild = "false"
+                    NoStdLib = "false"
+                    NoWarn = ""
+                    Optimize = "false"
+                    OutputPath = "bin\Debug\"
+                    RegisterForComInterop = "false"
+                    RemoveIntegerChecks = "false"
+                    TreatWarningsAsErrors = "false"
+                    WarningLevel = "4"
+                />
+                <Config
+                    Name = "Release"
+                    AllowUnsafeBlocks = "false"
+                    BaseAddress = "285212672"
+                    CheckForOverflowUnderflow = "false"
+                    ConfigurationOverrideFile = ""
+                    DefineConstants = "TRACE"
+                    DocumentationFile = ""
+                    DebugSymbols = "false"
+                    FileAlignment = "4096"
+                    IncrementalBuild = "false"
+                    NoStdLib = "false"
+                    NoWarn = ""
+                    Optimize = "true"
+                    OutputPath = "bin\Release\"
+                    RegisterForComInterop = "false"
+                    RemoveIntegerChecks = "false"
+                    TreatWarningsAsErrors = "false"
+                    WarningLevel = "4"
+                />
+            </Settings>
+            <References>
+                <Reference
+                    Name = "System"
+                    AssemblyName = "System"
+                    HintPath = "..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.dll"
+                />
+                <Reference
+                    Name = "System.Data"
+                    AssemblyName = "System.Data"
+                    HintPath = "..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Data.dll"
+                />
+                <Reference
+                    Name = "System.Drawing"
+                    AssemblyName = "System.Drawing"
+                    HintPath = "..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Drawing.dll"
+                />
+                <Reference
+                    Name = "System.Windows.Forms"
+                    AssemblyName = "System.Windows.Forms"
+                    HintPath = "..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Windows.Forms.dll"
+                />
+                <Reference
+                    Name = "System.XML"
+                    AssemblyName = "System.Xml"
+                    HintPath = "..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.XML.dll"
+                />
+                <Reference
+                    Name = "Cryptography"
+                    AssemblyName = "Cryptography"
+                    HintPath = "..\Cryptography\bin\Release\Cryptography.dll"
+                />
+                <Reference
+                    Name = "SpriteUtilities"
+                    Project = "{C7E15C1D-8AAA-4374-B78E-32A04A4F4DB9}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "FmodManaged"
+                    AssemblyName = "FmodManaged"
+                    HintPath = "FmodManaged.dll"
+                />
+                <Reference
+                    Name = "Microsoft.VisualBasic"
+                    AssemblyName = "Microsoft.VisualBasic"
+                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\Microsoft.VisualBasic.dll"
+                />
+                <Reference
+                    Name = "FloatMath"
+                    Project = "{7A4827BD-2462-4E4D-BCE1-E7D3A8ED3B54}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
+                <Reference
+                    Name = "Microsoft.DirectX"
+                    AssemblyName = "Microsoft.DirectX"
+                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.dll"
+                    AssemblyFolderKey = "hklm\dn\dx_1.0.2902.0"
+                />
+                <Reference
+                    Name = "Microsoft.DirectX.Direct3D"
+                    AssemblyName = "Microsoft.DirectX.Direct3D"
+                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.Direct3D.dll"
+                    AssemblyFolderKey = "hklm\dn\dx_1.0.2902.0"
+                />
+                <Reference
+                    Name = "Microsoft.DirectX.Direct3DX"
+                    AssemblyName = "Microsoft.DirectX.Direct3DX"
+                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2909.0\Microsoft.DirectX.Direct3DX.dll"
+                    AssemblyFolderKey = "hklm\dn\dx_1.0.2909.0"
+                />
+                <Reference
+                    Name = "Microsoft.DirectX.DirectSound"
+                    AssemblyName = "Microsoft.DirectX.DirectSound"
+                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.DirectSound.dll"
+                    AssemblyFolderKey = "hklm\dn\dx_1.0.2902.0"
+                />
+            </References>
+        </Build>
+        <Files>
+            <Include>
+                <File
+                    RelPath = "AASpriteObject.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "AssemblyInfo.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Bar.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "BlurConstants.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Brackets.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Catcher.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Controller.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Controls.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "DataButton.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "DXUtil.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Edge.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "EdgeComparer.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Explosion.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Fader.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "FallingFleckoPX.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "FleckoPX.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Game.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Game.resx"
+                    DependentUpon = "Game.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "GameState.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "GhostController.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "GhostRecorder.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Heli.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Input.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "KeyboardController.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "KeyButton.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Launcher.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Level.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Map.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "MapSprite.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Menu.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "MenuElement.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Mine.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Node.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ObjectSegment.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Pad.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "PadType.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Planet.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Player.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Rand.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Score.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "SimpleSong.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "SizeTexture.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Slider.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Song.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Spring.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "SpriteTime.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "StarField.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "StringCrypt.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "TextBox.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "TraceLogger.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "UIBox.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "UIBoxTex.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "data\levels"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\medals"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\ghosts\tutor1.ghost"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\ghosts\tutor2.ghost"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\ghosts\tutor3.ghost"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\ghosts\tutor4.ghost"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\ghosts\tutor5.ghost"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\bamboo1.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\bamboo2.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\bamboo3.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\castle1.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\castle2.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\castle3.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\lava1.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\lava2.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\lava3.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\medieval1.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\medieval2.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\medieval3.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\medieval4.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\sumie1.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\sumie2.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\sumie3.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\tile1.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\tile2.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\tile3.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\training1.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\training2.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\training3.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\training4.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\training5.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\wood1.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\wood2.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\maps\maingame\wood3.map"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\themes\bamboo.theme"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\themes\castle.theme"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\themes\default.theme"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\themes\lava.theme"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\themes\medieval.theme"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\themes\sumie.theme"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\themes\tiles.theme"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\themes\training.theme"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "data\themes\wood.theme"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "effects\glow.fx"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "fx\explosion.wav"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "fx\heal.wav"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "fx\hit.wav"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "fx\spring.wav"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\flecko\whitepx.bmp"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\flecko\whitepx.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\easyheli.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\finishpad.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\healpad.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\heli.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\launcher.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\mine.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\spring.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\sprites.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\startpad.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\particles\explosion.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\particles\explosion.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\particles\spark.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\particles\spark.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\bamboo\bg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\bamboo\bg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\bamboo\fg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\bamboo\fg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\bamboo\sprites.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\bamboo\wall.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\bamboo\wall.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\castle\bg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\castle\bg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\castle\candle.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\castle\fg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\castle\fg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\castle\sprites.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\castle\wall.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\castle\wall.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\default\bg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\default\bg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\default\fg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\default\fg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\default\sprites.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\default\wall.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\default\wall.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\lava\bg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\lava\bg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\lava\fg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\lava\fg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\lava\sprites.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\lava\wall.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\lava\wall.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\medieval\bg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\medieval\bg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\medieval\fg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\medieval\fg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\medieval\sprites.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\medieval\wall.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\medieval\wall.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\bg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\bg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\char1.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\char2.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\char3.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\fg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\fg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\house.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\sprites.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\text.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\text2.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\trees.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\vine.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\wall.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\sumie\wall.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\bg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\bg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\cactus1.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\cactus2.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\fg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\fg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\rock1.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\rock2.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\rock3.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\ruby.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\sprites.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\wall.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\tiles\wall.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\bg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\bg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\box1.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\box10.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\box11.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\box2.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\box3.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\box4.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\box5.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\box6.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\box7.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\box8.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\box9.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\fg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\fg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\sprites.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\wall.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\training\wall.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\bg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\bg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\candy1.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\candy2.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\candy3.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\candy4.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\fg.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\fg.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\lulu.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\sprites.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\sugar.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\teacup.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\teapot.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\wall.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\game\themes\wood\wall.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\gameui\bignumbers.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\gameui\dot.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\gameui\gameui.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\gameui\smallnumbers.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\a.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\arrow.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\b.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\barmiddle.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\barside.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\blank.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\blank.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\bluetrophy.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\bonesaw.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\buttonleft.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\buttonmiddle.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\buttonright.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\buttons.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\congrats.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\easy.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\interface.png"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\marker.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\pause.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\slider.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\sphere.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\star.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\trophy.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\box\blc.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\box\bottom.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\box\brc.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\box\left.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\box\middle.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\box\right.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\box\tlc.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\box\top.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\box\trc.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\1.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\2.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\3.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\4.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\5.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\bamboo.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\cannon.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\castle.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\credits.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\delete.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\desert.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\error.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\hokihoki.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\lava.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\newplayer.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\options.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\parquet.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\playerselect.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\starttext.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\sumie.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\training.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\menu\text\volume.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\space\starfield\star.dat"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textures\space\starfield\star.png"
+                    BuildAction = "EmbeddedResource"
+                />
+            </Include>
+        </Files>
+    </CSHARP>
+</VisualStudioProject>
+
