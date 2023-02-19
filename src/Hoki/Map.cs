@@ -3,8 +3,9 @@ using System.IO;
 using System.Collections;
 using SpriteUtilities;
 using FloatMath;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+using SharpDX;
+using SharpDX.Direct3D9;
+using System.Windows.Forms;
 
 namespace Hoki {
 	/// <summary>
@@ -520,7 +521,7 @@ namespace Hoki {
 			}
 
 			//Now that the edges are modified, make walls from them
-			CustomVertex.PositionColoredTextured[] wallVerts=new CustomVertex.PositionColoredTextured[edges.Count*4];	//This is inefficient because some edges share points
+			PositionColoredTextured[] wallVerts=new PositionColoredTextured[edges.Count*4];	//This is inefficient because some edges share points
 			short[] wallIndices=new short[edges.Count*6];
 			
 			for (int i=0;i<edges.Count;i++) {
@@ -533,7 +534,7 @@ namespace Hoki {
 					if (n==2) u=1;
 					if (n%2==1) v=1; else v=0;
 
-					wallVerts[i*4+n]=new CustomVertex.PositionColoredTextured(e.Points[n].X,e.Points[n].Y,1.0f,System.Drawing.Color.White.ToArgb(),u,v);
+					wallVerts[i*4+n]=new PositionColoredTextured(e.Points[n].X,e.Points[n].Y,1.0f,System.Drawing.Color.White.ToArgb(),u,v);
 				}
 
 				//Add the indices
@@ -778,16 +779,16 @@ namespace Hoki {
 			foreground.Y=lineLayer.Y*game.ClientSize.Height/PreviewSize;
 
 			//Prepare a texture, rts, and viewport for rendering
-			RenderToSurface rts=new RenderToSurface(device,PreviewSize,PreviewSize,Format.A8R8G8B8,false,DepthFormat.D16);
+			RenderToSurface rts=new RenderToSurface(device,PreviewSize,PreviewSize,Format.A8R8G8B8,false,Format.D16);
 			Texture renderTex=new Texture(device,PreviewSize,PreviewSize,1,Usage.RenderTarget,Format.A8R8G8B8,Pool.Default);
 			Viewport viewport=new Viewport();	//Viewport for the RTS
 			viewport.Width=PreviewSize;
 			viewport.Height=PreviewSize;
-			viewport.MaxZ=1;
+			viewport.MaxDepth=1;
 
 			//Render the scene to tex
 			rts.BeginScene(renderTex.GetSurfaceLevel(0),viewport);
-			device.Clear(ClearFlags.Target,System.Drawing.Color.FromArgb(20,20,20).ToArgb(),0.0f,0);
+			device.Clear(ClearFlags.Target,new SharpDX.Mathematics.Interop.RawColorBGRA(20, 20, 20, 1),0.0f,0);
 
 			//Perform the drawing operations
 			renderLayer.Draw();
@@ -795,19 +796,24 @@ namespace Hoki {
 			//HACK, SORT OF: draw the walls
 			//Convert the node vectors to d3d vertices and shove them in a vertex buffer for drawing walls
 
-			CustomVertex.PositionColored[] wallVerts=new CustomVertex.PositionColored[vertices.Length];
+			PositionColored[] wallVerts=new PositionColored[vertices.Length];
 			for (int i=0;i<vertices.Length;i++)
-				wallVerts[i]=new CustomVertex.PositionColored(vertices[i].X,vertices[i].Y,1,lineColor.ToArgb());
-			VertexBuffer wallVB=new VertexBuffer(typeof(CustomVertex.PositionColored),wallVerts.Length,device,Usage.WriteOnly,CustomVertex.PositionColored.Format,Pool.Default);
-			wallVB.SetData(wallVerts,0,LockFlags.None);
-			IndexBuffer wallIB=new IndexBuffer(typeof(short),wallIndices.Length,device,Usage.WriteOnly,Pool.Default);
-			wallIB.SetData(wallIndices,0,LockFlags.None);
+				wallVerts[i]=new PositionColored(vertices[i].X,vertices[i].Y,1,lineColor.ToArgb());
 
-			device.VertexFormat=CustomVertex.PositionColored.Format;
-			device.SetStreamSource(0,wallVB,0);
+            VertexBuffer wallVB = new VertexBuffer(device,PositionColored.StrideSize * wallVerts.Length, Usage.WriteOnly, PositionColored.Format, Pool.Default);
+            //VertexBuffer wallVB=new VertexBuffer(typeof(PositionColored),wallVerts.Length,device,Usage.WriteOnly,CustomVertex.PositionColored.Format,Pool.Default);
+            wallVB.Lock(0, 0, LockFlags.None).WriteRange(wallVerts);
+			wallVB.Unlock();
+
+			IndexBuffer wallIB=new IndexBuffer(device, sizeof(short),Usage.WriteOnly,Pool.Default, false);
+			wallIB.Lock(0, 0, LockFlags.None).WriteRange(wallIndices);
+			wallIB.Unlock();
+
+			device.VertexFormat=PositionColored.Format;
+			device.SetStreamSource(0,wallVB,0, PositionColored.StrideSize);
 			device.Indices=wallIB;
-			device.DrawIndexedPrimitives(PrimitiveType.LineList,0,0,wallVerts.Length,0,wallIndices.Length/2);
-			device.VertexFormat=CustomVertex.PositionColoredTextured.Format;
+			device.DrawIndexedPrimitive(PrimitiveType.LineList,0,0,wallVerts.Length,0,wallIndices.Length/2);
+			device.VertexFormat=PositionColoredTextured.Format;
 
 			//End the rts scene
 			rts.EndScene(Filter.Linear);
@@ -876,7 +882,7 @@ namespace Hoki {
 			Segment local=ToLocal(s);
 
 			//Assign to out vars
-			intersection=Vector2.Empty;
+			intersection=Vector2.Zero;
 			mapObject=null;
 
 			//Iterate through the walls and test for collision

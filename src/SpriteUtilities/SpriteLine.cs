@@ -1,8 +1,9 @@
 using System;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using D3D=Microsoft.DirectX.Direct3D;
+using SharpDX;
+using SharpDX.Direct3D9;
+using D3D=SharpDX.Direct3D9;
 using FloatMath;
+using SharpDX.Mathematics.Interop;
 
 namespace SpriteUtilities {
 	/// <summary>
@@ -124,12 +125,12 @@ namespace SpriteUtilities {
 		/// <param name="trans">Absolute transformation matrix</param>
 		protected override void deviceDraw(Matrix trans) {
 			//Create new Vector2s and transform them
-			Vector2 P1=Vector2.Empty,P2=new Vector2(vector.X,vector.Y);
-			P1.TransformCoordinate(trans);
-			P2.TransformCoordinate(trans);
+			Vector2 P1=Vector2.Zero,P2=new Vector2(vector.X,vector.Y);
+			P1 = Vector2.TransformCoordinate(P1, trans);
+			P2 = Vector2.TransformCoordinate(P2, trans);
 
 			//Draw the line
-			line.Draw(new Vector2[]{P1,P2},Tint);
+			line.Draw(new RawVector2[]{P1,P2},new RawColorBGRA(Tint.B, Tint.G, Tint.R, Tint.A));
 		}
 	}
 }

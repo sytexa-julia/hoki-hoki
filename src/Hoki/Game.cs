@@ -6,15 +6,16 @@ using System.Windows.Forms;
 using System.Data;
 using System.IO;
 using System.Security.Cryptography;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using D3D=Microsoft.DirectX.Direct3D;
-using DS=Microsoft.DirectX.DirectSound;
+using SharpDX;
+using SharpDX.Direct3D9;
+using D3D=SharpDX.Direct3D9;
+using DS=SharpDX.DirectSound;
 using SpriteUtilities;
 using FloatMath;
 using Cryptography;
 using FSound=FmodManaged.FSOUND;
 using FMusic=FmodManaged.FMUSIC;
+using FmodManaged.FSOUND.Function;
 
 namespace Hoki {
 	/// <summary>
@@ -93,9 +94,9 @@ namespace Hoki {
 		private TextureFilter
 			minFilter,
 			magFilter;
-		public static Caps
+		public static Capabilities
 			Hardware;
-		private DS.Device
+		private DS.DirectSound
 			soundDevice;
 		#endregion
 		
@@ -106,8 +107,8 @@ namespace Hoki {
 			update;			//List of Updateables
 		private SpriteObject
 			root;			//SpriteObject to which all others are ultimately children
-		private Color
-			background;		//Color the device should be cleared to
+		private System.Drawing.Color
+            background;		//Color the device should be cleared to
 		private Hashtable
 			levels,			//Loaded levels, keyed on map hashes
 			themes;			//Loaded theme files, keyed on their hashes
@@ -603,47 +604,72 @@ namespace Hoki {
 			AnyKeyDown+=new KeyEventHandler(onKeyDown);
 
 			//Set up DirectSound
-			soundDevice=new DS.Device();
-			soundDevice.SetCooperativeLevel(this,DS.CooperativeLevel.Normal);
+			soundDevice=new DS.DirectSound();
+			soundDevice.SetCooperativeLevel(this.Handle,DS.CooperativeLevel.Normal);
 
-			DS.BufferDescription bufferDesc=new DS.BufferDescription();
-			bufferDesc.ControlVolume=true;
-			bufferDesc.DeferLocation=true;
+			DS.SoundBufferDescription bufferDesc=new DS.SoundBufferDescription();
+			bufferDesc.Flags = DS.BufferFlags.ControlVolume | DS.BufferFlags.Defer;
+            //bufferDesc.ControlVolume = true;
+            //bufferDesc.DeferLocation=true;
 
 			//Load sound effects
 			int volume=Song.Volume==0?-10000:(int)((1-Song.Volume/100)*-3000);
 
-			Explosion.Sounds=new DS.SecondaryBuffer[3];
+			/// Load data from a stream into a secondary sound buffer
+			void LoadSound(DS.SecondarySoundBuffer buffer, System.IO.Stream soundStream)
+			{
+				DataStream dataPart2;
+				DataStream dataPart1 = buffer.Lock(0, buffer.Capabilities.BufferBytes, DS.LockFlags.EntireBuffer, out dataPart2);
+
+                using (var ms = new MemoryStream())
+				{
+                    soundStream.CopyTo(ms);
+                    byte[] soundData = ms.ToArray();
+
+                    dataPart1.WriteRange(soundData);
+                }
+
+                buffer.Unlock(dataPart1, dataPart2);
+			}
+			
+
+			Explosion.Sounds=new DS.SecondarySoundBuffer[3];
 			for (int i=0;i<Explosion.Sounds.Length;i++) {
-				Explosion.Sounds[i]=new DS.SecondaryBuffer(getStream("Hoki.fx.explosion.wav"),bufferDesc,soundDevice);
+				Explosion.Sounds[i]=new DS.SecondarySoundBuffer(soundDevice,bufferDesc);
+				LoadSound(Explosion.Sounds[i], getStream("Hoki.fx.explosion.wav"));
 				Explosion.Sounds[i].Volume=volume;
 			}
 
-			Heli.HitSounds=new DS.SecondaryBuffer[4];
+			Heli.HitSounds=new DS.SecondarySoundBuffer[4];
 			for (int i=0;i<Heli.HitSounds.Length;i++) {
-				Heli.HitSounds[i]=new DS.SecondaryBuffer(getStream("Hoki.fx.hit.wav"),bufferDesc,soundDevice);
+                Heli.HitSounds[i] = new DS.SecondarySoundBuffer(soundDevice, bufferDesc);
+                LoadSound(Heli.HitSounds[i], getStream("Hoki.fx.hit.wav"));
 				Heli.HitSounds[i].Volume=volume;
 			}
 
-			Heli.HealSound=new DS.SecondaryBuffer(getStream("Hoki.fx.heal.wav"),bufferDesc,soundDevice);
+			Heli.HealSound=new DS.SecondarySoundBuffer(soundDevice, bufferDesc);
+			LoadSound(Heli.HealSound, getStream("Hoki.fx.heal.wav"));
 			Heli.HealSound.Volume=volume;
 
-			Spring.Sounds=new DS.SecondaryBuffer[4];
+			Spring.Sounds=new DS.SecondarySoundBuffer[4];
 			for (int i=0;i<Spring.Sounds.Length;i++) {
-				Spring.Sounds[i]=new DS.SecondaryBuffer(getStream("Hoki.fx.spring.wav"),bufferDesc,soundDevice);
+				Spring.Sounds[i]=new DS.SecondarySoundBuffer(soundDevice, bufferDesc);
+				LoadSound(Spring.Sounds[i], getStream("Hoki.fx.spring.wav"));
 				Spring.Sounds[i].Volume=volume;
 			}
 		}
 
 		public void InitializeGraphics() {
-			//Turn off event handling
-			Device.IsUsingEventHandlers=false;
+			var direct3d = new Direct3D();
 
+            //Turn off event handling
+            //Device.IsUsingEventHandlers=false;
+			
 			//Set up the presentation parameters
 			PresentParameters pParams=new PresentParameters();
 			pParams.SwapEffect=SwapEffect.Discard;
 
-			if (antialias) pParams.MultiSample=MultiSampleType.SixSamples;
+			if (antialias) pParams.MultiSampleType = MultisampleType.SixSamples;
 
 			pParams.Windowed=windowed;
 			if (!windowed) pParams.BackBufferFormat=Format.X8R8G8B8;
@@ -651,53 +677,73 @@ namespace Hoki {
 			pParams.BackBufferHeight=480;
 
 			//Get some hardware caps
-			Hardware=Manager.GetDeviceCaps(0,DeviceType.Hardware);
-			Caps localCaps=Hardware;
+			Hardware = direct3d.GetDeviceCaps(0, DeviceType.Hardware);
+			//Hardware=HardwareManager.GetDeviceCaps(0,DeviceType.Hardware);
+			Capabilities localCaps=Hardware;
 			CreateFlags flags=CreateFlags.SoftwareVertexProcessing;	//Default createflags
 
 			//Use Hardware vertex processing if available
-			if (Hardware.DeviceCaps.SupportsHardwareTransformAndLight) flags=CreateFlags.HardwareVertexProcessing;
+			if (Hardware.DeviceCaps.HasFlag(DeviceCaps.HWTransformAndLight)) flags=CreateFlags.HardwareVertexProcessing;
 
 			//Create the device
-			device=new Device(0,DeviceType.Hardware,this,flags,pParams);
+			device=new Device(direct3d, 0,DeviceType.Hardware,this.Handle,flags,pParams);
 
 			//Pick filtering to do
-			if (Hardware.TextureFilterCaps.SupportsMagnifyLinear)
+			if (Hardware.TextureFilterCaps.HasFlag(FilterCaps.MagLinear))
 					magFilter=TextureFilter.Linear;
 			else	magFilter=TextureFilter.Point;
 
-			if (Hardware.TextureFilterCaps.SupportsMinifyLinear)
+			if (Hardware.TextureFilterCaps.HasFlag(FilterCaps.MinLinear))
 					minFilter=TextureFilter.Linear;
 			else	minFilter=TextureFilter.Point;
 
 			//Use point filtering by default
-			device.SamplerState[0].MinFilter=TextureFilter.Point;
-			device.SamplerState[0].MagFilter=TextureFilter.Point;
+			device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Point);
+            //device.SamplerState[0].MinFilter=TextureFilter.Point;
+            device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Point);
+            //device.SamplerState[0].MagFilter=TextureFilter.Point;
 
-			//Basic renderstates
-			device.RenderState.Lighting=false;
-			device.RenderState.CullMode=Cull.None;
-			device.RenderState.MultiSampleAntiAlias=false;
+            //Basic renderstates
+			device.SetRenderState(RenderState.Lighting, false);
+            device.SetRenderState(RenderState.CullMode, Cull.None);
+            device.SetRenderState(RenderState.MultisampleAntialias, false);
+            //device.RenderState.Lighting=false;
+            //device.RenderState.CullMode=Cull.None;
+            //device.RenderState.MultiSampleAntiAlias=false;
 
-			//Blending states
-			if (Hardware.TextureOperationCaps.SupportsModulate) {
-				device.TextureState[0].ColorOperation=TextureOperation.Modulate;	//Required for vertex color blending
-				device.TextureState[0].AlphaOperation=TextureOperation.Modulate;	//Required for pixel and vertex alpha blending
+            //Blending states
+            if (Hardware.TextureOperationCaps.HasFlag(TextureOperationCaps.Modulate)) {
+				device.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.Modulate);
+                device.SetTextureStageState(0, TextureStage.AlphaOperation, TextureOperation.Modulate);
+                //device.TextureState[0].ColorOperation=TextureOperation.Modulate;	//Required for vertex color blending
+                //device.TextureState[0].AlphaOperation=TextureOperation.Modulate;	//Required for pixel and vertex alpha blending
+            }
+
+            device.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
+            device.SetTextureStageState(0, TextureStage.ColorArg2, TextureArgument.Diffuse);
+            device.SetTextureStageState(0, TextureStage.AlphaArg1, TextureArgument.Texture);
+            device.SetTextureStageState(0, TextureStage.AlphaArg2, TextureArgument.Diffuse);
+            //device.TextureState[0].ColorArgument1=TextureArgument.TextureColor;		//Required for vertex color and alpha blending
+            //device.TextureState[0].ColorArgument2=TextureArgument.Diffuse;			//Required for vertex color blending
+            //device.TextureState[0].AlphaArgument1=TextureArgument.TextureColor;		//Required for pixel alpha blending
+            //device.TextureState[0].AlphaArgument2=TextureArgument.Diffuse;			//Required for vertex alpha blending
+
+            if (Hardware.SourceBlendCaps.HasFlag(BlendCaps.SourceAlpha)) { 
+				device.SetRenderState(RenderState.SourceBlend, Blend.SourceAlpha);
+				//device.RenderState.SourceBlend=Blend.SourceAlpha;					//Required for alpha blending
 			}
-			device.TextureState[0].ColorArgument1=TextureArgument.TextureColor;		//Required for vertex color and alpha blending
-			device.TextureState[0].ColorArgument2=TextureArgument.Diffuse;			//Required for vertex color blending
-			device.TextureState[0].AlphaArgument1=TextureArgument.TextureColor;		//Required for pixel alpha blending
-			device.TextureState[0].AlphaArgument2=TextureArgument.Diffuse;			//Required for vertex alpha blending
+			if (Hardware.DestinationBlendCaps.HasFlag(BlendCaps.InverseSourceAlpha)) {
+                device.SetRenderState(RenderState.DestinationBlend, Blend.InverseSourceAlpha);
+                //device.RenderState.DestinationBlend=Blend.InvSourceAlpha;			//Required for alpha blending
+            }
 
-			if (Hardware.SourceBlendCaps.SupportsSourceAlpha)
-				device.RenderState.SourceBlend=Blend.SourceAlpha;					//Required for alpha blending
-			if (Hardware.DestinationBlendCaps.SupportsInverseSourceAlpha)
-				device.RenderState.DestinationBlend=Blend.InvSourceAlpha;			//Required for alpha blending
-			device.RenderState.AlphaBlendEnable=true;								//Required for alpha blending
-			device.RenderState.AlphaTestEnable=false;
+            device.SetRenderState(RenderState.AlphaBlendEnable, true);
+            device.SetRenderState(RenderState.AlphaTestEnable, false);
+            //device.RenderState.AlphaBlendEnable=true;								//Required for alpha blending
+            //device.RenderState.AlphaTestEnable=false;
 
-			//Other Device states
-			device.VertexFormat=CustomVertex.PositionColoredTextured.Format;
+            //Other Device states
+            device.VertexFormat=PositionColoredTextured.Format;
 
 			//Set up matrices
 			world=Matrix.Identity;
@@ -705,9 +751,9 @@ namespace Hoki {
 			proj=Matrix.OrthoOffCenterLH(0.0f,width,height,0.0f,0.0f,1.0f);
 
 			//Copy them to the device
-			device.Transform.World=world;
-			device.Transform.View=view;
-			device.Transform.Projection=proj;
+			device.SetTransform(TransformState.World, world);
+			device.SetTransform(TransformState.View, view);
+			device.SetTransform(TransformState.Projection, proj);
 
 			//Make an effect pool
 			effectPool=new EffectPool();
@@ -719,12 +765,13 @@ namespace Hoki {
 			viewport=new Viewport();	//Viewport for the RTS
 			viewport.Width=width;
 			viewport.Height=height;
-			viewport.MaxZ=1;
+			viewport.MaxDepth=1;
 
 			//Initialize fonts
-			menuFontSmall=new D3D.Font(device,new System.Drawing.Font("Century Gothic",11));
-			menuFontLarge=new D3D.Font(device,new System.Drawing.Font("Century Gothic",13));
-			boneFont=new D3D.Font(device,new System.Drawing.Font("Century Gothic",72));
+			FontDescription fd = new FontDescription();
+			menuFontSmall=new D3D.Font(device, new FontDescription() { FaceName = "Century Gothic", Height = 11, Italic = false, CharacterSet = FontCharacterSet.Ansi, MipLevels = 0, OutputPrecision = FontPrecision.TrueType, PitchAndFamily = FontPitchAndFamily.Default, Quality = FontQuality.ClearType, Weight = FontWeight.Normal });
+			menuFontLarge=new D3D.Font(device, new FontDescription() { FaceName = "Century Gothic", Height = 13, Italic = false, CharacterSet = FontCharacterSet.Ansi, MipLevels = 0, OutputPrecision = FontPrecision.TrueType, PitchAndFamily = FontPitchAndFamily.Default, Quality = FontQuality.ClearType, Weight = FontWeight.Normal });
+			boneFont=new D3D.Font(device, new FontDescription() { FaceName = "Century Gothic", Height = 72, Italic = false, CharacterSet = FontCharacterSet.Ansi, MipLevels = 0, OutputPrecision = FontPrecision.TrueType, PitchAndFamily = FontPitchAndFamily.Default, Quality = FontQuality.ClearType, Weight = FontWeight.Normal });
 
 			//Load persistant textures
 			string path="Hoki.textures.menu.";
@@ -817,14 +864,16 @@ namespace Hoki {
 					break;
 			}
 
-			device.Clear(ClearFlags.Target,background,0,0);
+			device.Clear(ClearFlags.Target,new SharpDX.Mathematics.Interop.RawColorBGRA(background.B, background.G, background.R, background.A),0,0);
 
 			//Draw the scene to the screen
 			device.BeginScene();
 
 			//Perform the drawing operations
 			root.Draw();
-			device.SetStreamSource(0,null,0);
+
+			//TODO: is this needed?
+			// device.SetStreamSource(0,null,0, );
 
 			device.EndScene();
 			device.Present();
@@ -914,7 +963,7 @@ namespace Hoki {
 		/// </summary>
 		private void fleckoBegin() {
 			//Set the stage color
-			background=Color.Black;
+			background=System.Drawing.Color.Black;
 
 			//Set the timer
 			fleckoTimeLeft=fleckoTime;
@@ -961,13 +1010,14 @@ namespace Hoki {
 			//Add layers to root
 			root.Add(fleckoLayer);
 
-			device.RenderState.MultiSampleAntiAlias=antialias;
-		}
+			device.SetRenderState(RenderState.MultisampleAntialias, antialias);
+            // device.RenderState.MultiSampleAntiAlias=antialias;
+        }
 
-		/// <summary>
-		/// Called at the end of the flecko px intro
-		/// </summary>
-		private void fleckoEnd() {
+        /// <summary>
+        /// Called at the end of the flecko px intro
+        /// </summary>
+        private void fleckoEnd() {
 			FallingFleckoPX.OnFleckoPXCreate-=new FleckoPXHandler(OnFleckoPXCreate);
 
 			foreach (FleckoPX px in pxList) px.Unhook(this);
@@ -999,14 +1049,16 @@ namespace Hoki {
 		private void menuBegin() {
 			#region stage settings
 			//Set filters
-			device.SamplerState[0].MinFilter=TextureFilter.Point;
-			device.SamplerState[0].MagFilter=TextureFilter.Point;
+			device.SetSamplerState(0, SamplerState.MinFilter, TextureFilter.Point);
+            device.SetSamplerState(0, SamplerState.MagFilter, TextureFilter.Point);
+            //device.SamplerState[0].MinFilter=TextureFilter.Point;
+			//device.SamplerState[0].MagFilter=TextureFilter.Point;
 			
 			//Turn off antialiasing
-			device.RenderState.MultiSampleAntiAlias=false;
+			device.SetRenderState(RenderState.MultisampleAntialias, false);
 
 			//Use a colored bg
-			background=Color.Black;
+			background=System.Drawing.Color.Black;
 
 			//No ghost by default
 			viewGhost=null;
@@ -1207,7 +1259,7 @@ namespace Hoki {
 				quickInstructions.X=startText.X-(quickInstructions.Width-startText.Width);
 				quickInstructions.Y=startMenu.Y+startMenu.Height+50;
 				quickInstructions.Tint=System.Drawing.Color.White;
-				quickInstructions.Format=DrawTextFormat.Center;
+				quickInstructions.Format=FontDrawFlags.Center;
 				quickInstructions.Text="Use the directional keys to navigate the menu\nPress button 1 to select, button 2 to cancel\nIn-game, use buttons 1 and 2 to go faster";
 				menuLayer.Add(quickInstructions);
 
@@ -1556,7 +1608,7 @@ namespace Hoki {
 			errText.X=l.X+margin;
 			errText.Y=l.Y-l.Thickness/2+2*margin+errHeader.Height;
 			errText.Tint=System.Drawing.Color.White;
-			errText.Format=DrawTextFormat.WordBreak|DrawTextFormat.Center|DrawTextFormat.VerticalCenter;
+			errText.Format= FontDrawFlags.WordBreak| FontDrawFlags.Center| FontDrawFlags.VerticalCenter;
 			errMenuLayer.Add(errText);
 
 			//Menu
@@ -1796,7 +1848,7 @@ namespace Hoki {
 			};
 
 			//HACK: Scale the points
-			for (int i=0;i<levelPos.Length;i++) levelPos[i].Scale(1.5f);
+			for (int i=0;i<levelPos.Length;i++) levelPos[i] = Vector2.Multiply(levelPos[i], 1.5f);
 
 			Vector2 markerPos=mainMenuPos+centerPoint+new Vector2(width,0);	//Make a base position for all markers
 
@@ -1874,7 +1926,7 @@ namespace Hoki {
 
 					SpriteText endText=new SpriteText(device,sprite,menuFontSmall,400,100);
 					endText.Tint=System.Drawing.Color.White;
-					endText.Format=DrawTextFormat.Center;
+					endText.Format= FontDrawFlags.Center;
 					endText.X=congrats.X-(endText.Width-congrats.Width)/2;
 					endText.Y=congrats.Y+congrats.Height+10.5f;
 					endText.Text="Completed in "+Score.GetTimeString(player.TotalTime);
@@ -1958,7 +2010,7 @@ namespace Hoki {
 			boneText=new SpriteText(device,sprite,boneFont,ClientSize.Width,100);
 			boneText.X=(startMenu.Width-boneText.Width)/2;
 			boneText.Y=60;
-			boneText.Format=DrawTextFormat.Center;
+			boneText.Format= FontDrawFlags.Center;
 			boneText.Text="BONESAW";
 			boneText.Tint=System.Drawing.Color.White;
 			boneText.Visible=false;
@@ -2178,11 +2230,13 @@ namespace Hoki {
 		#region main
 		public void mainBegin() {
 			//Set filters
-			device.SamplerState[0].MinFilter=minFilter;
-			device.SamplerState[0].MagFilter=magFilter;
+			device.SetSamplerState(0, SamplerState.MinFilter, minFilter);
+            device.SetSamplerState(0, SamplerState.MagFilter, magFilter);
+            //device.SamplerState[0].MinFilter=minFilter;
+            //device.SamplerState[0].MagFilter=magFilter;
 
-			//Reset the timers
-			started=false;
+            //Reset the timers
+            started =false;
 			finished=false;
 			dead=false;
 			gameTime=0;
@@ -3053,7 +3107,7 @@ namespace Hoki {
 		/// <summary>
 		/// Returns a stream of an embedded resource
 		/// </summary>
-		public Stream getStream(string resourcePath) {
+		public System.IO.Stream getStream(string resourcePath) {
 			return GetType().Module.Assembly.GetManifestResourceStream(resourcePath);
 		}
 
@@ -3073,8 +3127,8 @@ namespace Hoki {
 		/// <param name="imgStream">Path to the image file</param>
 		/// <returns></returns>
 		public SizeTexture loadSizeTexture(String imagePath) {
-			//Get the stream
-			Stream imgStream=getStream(imagePath);
+            //Get the stream
+            System.IO.Stream imgStream=getStream(imagePath);
 
 			//Get the size
 			Bitmap bmp=new Bitmap(imgStream);
@@ -3086,14 +3140,14 @@ namespace Hoki {
 			imgStream=getStream(imagePath);
 
 			//Create the SizeTexture
-			SizeTexture s=new SizeTexture(TextureLoader.FromStream(device,imgStream,width,height,1,0,textureFormat,Pool.Default,Filter.None,Filter.None,0),width,height);
+			SizeTexture s=new SizeTexture(Texture.FromStream(device,imgStream,width,height,1,0,textureFormat,Pool.Default,Filter.None,Filter.None,0),width,height);
 
 			//Close the stream and return the SizeTexture
 			imgStream.Close();
 			return s;
 		}
 
-		private void getTextureData(string path,out Stream imgStream,out int width,out int height) {
+		private void getTextureData(string path,out System.IO.Stream imgStream,out int width,out int height) {
 			//Get the stream
 			imgStream=getStream(path);
 

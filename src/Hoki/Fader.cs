@@ -1,7 +1,7 @@
 using System;
-using Microsoft.DirectX.Direct3D;
 using SpriteUtilities;
 using FloatMath;
+using SharpDX.Direct3D9;
 
 namespace Hoki {
 	/// <summary>

@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+using SharpDX;
+using SharpDX.Direct3D9;
 using SpriteUtilities;
 using FloatMath;
 
@@ -86,7 +86,7 @@ namespace Hoki {
 		public void MoveTo(Vector2 position) {
 			target=position;
 			distance=position-shift;				//Get the distance
-			initVelocity=Vector2.Scale(velocity,1/lastStep);	//Store the current velocity TO REVERT TO STABLE (but still not right) VERSION, get rid of the scale on this line
+			initVelocity=Vector2.Multiply(velocity,1/lastStep);	//Store the current velocity TO REVERT TO STABLE (but still not right) VERSION, get rid of the scale on this line
 			initPosition=shift;						//Store the current position;
 
 			topSpeed=new Vector2(getTopSpeed(distance.X,initVelocity.X),getTopSpeed(distance.Y,initVelocity.Y));
@@ -129,7 +129,7 @@ namespace Hoki {
 
 				return dist*partRatio+topSpeed*t*(1-t/secondTime+t*t/3/secondTime/secondTime);
 			} else {
-				if (Vector2.Length(target-shift)<=velocity.Length()/lastStep) return dist;
+				if ((target-shift).Length()<=velocity.Length()/lastStep) return dist;
 				else {
 					overShot=true;
 					return currentPos;
@@ -161,7 +161,7 @@ namespace Hoki {
 			//Move the stars
 			float starScale=1+speed/3;
 			foreach (Star star in stars) {
-				Vector2 starVelocity=Vector2.Scale(velocity,-star.Z*starZ);
+				Vector2 starVelocity=Vector2.Multiply(velocity,-star.Z*starZ);
 				star.X+=starVelocity.X;
 				star.Y+=starVelocity.Y;
 				star.XScale=starScale*star.Z*Star.SizeFactor;

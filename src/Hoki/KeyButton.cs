@@ -1,5 +1,5 @@
 using System;
-using Microsoft.DirectX.Direct3D;
+using SharpDX.Direct3D9;
 using SpriteUtilities;
 
 namespace Hoki {
@@ -48,7 +48,7 @@ namespace Hoki {
 
 			text=new SpriteText(device,sprite,font,(int)middle.Width-2,(int)middle.Height);
 			text.X=middle.X+2;
-			text.Format=DrawTextFormat.VerticalCenter;
+			text.Format=FontDrawFlags.VerticalCenter;
 			Add(text);
 
 			//Hook events

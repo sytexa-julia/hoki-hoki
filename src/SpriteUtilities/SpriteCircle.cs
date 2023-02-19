@@ -1,7 +1,9 @@
 using System;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+using System.Runtime.InteropServices;
 using FloatMath;
+using SharpDX;
+using SharpDX.Direct3D9;
+using SharpDX.Win32;
 
 namespace SpriteUtilities {
 	/// <summary>
@@ -22,23 +24,25 @@ namespace SpriteUtilities {
 			this.detail=detail;
 
 			//Create a vertex array
-			CustomVertex.PositionColored[] verts=new CustomVertex.PositionColored[detail+1];
+			PositionColored[] verts=new PositionColored[detail+1];
 			float degPerLine=2*FMath.PI/detail;
 			for (int i=0;i<detail;i++) {
 				float ang=degPerLine*i;
-				verts[i]=new CustomVertex.PositionColored(FMath.Cos(ang)*radius,FMath.Sin(ang)*radius,1,color);
+				verts[i]=new PositionColored(FMath.Cos(ang)*radius,FMath.Sin(ang)*radius,1,color);
 			}
-			verts[verts.Length-1]=verts[0];	//Copy the first point into the last slot to connect back around
+			verts[verts.Length-1]=verts[0]; //Copy the first point into the last slot to connect back around
 
-			//Create a VB and load the verts into it
-			vb=new VertexBuffer(typeof(CustomVertex.PositionColored),detail+1,device,Usage.WriteOnly,CustomVertex.PositionColored.Format,Pool.Default);
-			vb.SetData(verts,0,LockFlags.None);
+            //Create a VB and load the verts into it
+            vb = new VertexBuffer(device, PositionColored.StrideSize * (detail + 1), Usage.WriteOnly, PositionColored.Format, Pool.Default);
+			vb.Lock(0, 0, LockFlags.None).WriteRange(verts);
+			vb.Unlock();
 		}
 
 		protected override void deviceDraw(Matrix trans) {
-			device.Transform.World=trans;
-			device.SetStreamSource(0,vb,0);
-			device.VertexFormat=CustomVertex.PositionColored.Format;
+			device.SetTransform(0, trans);
+			//device.Transform.World=trans;
+			device.SetStreamSource(0,vb,0, PositionColored.StrideSize);
+			device.VertexFormat=PositionColored.Format;
 			device.DrawPrimitives(PrimitiveType.LineStrip,0,detail);
 		}
 

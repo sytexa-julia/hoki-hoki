@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using DS=Microsoft.DirectX.DirectSound;
+using SharpDX;
+using SharpDX.Direct3D9;
+using DS=SharpDX.DirectSound;
 using SpriteUtilities;
 using FloatMath;
 
@@ -62,8 +62,8 @@ namespace Hoki {
 			Die;
 		#endregion
 
-		public static DS.SecondaryBuffer[] HitSounds;
-		public static DS.SecondaryBuffer HealSound;
+		public static DS.SecondarySoundBuffer[] HitSounds;
+		public static DS.SecondarySoundBuffer HealSound;
 		private static int currentSound=0;
 		private float soundWait;
 		private const float soundDelay=0.07f;
@@ -115,7 +115,7 @@ namespace Hoki {
 		/// The point in the exact center of the stick
 		/// </summary>
 		public Vector2 Midpoint {
-			get { return Vector2.Scale(p1+p2,0.5f); }
+			get { return Vector2.Multiply(p1+p2,0.5f); }
 			set {
 				Vector2 difference=value-Midpoint;
 				p1+=difference;
@@ -140,7 +140,7 @@ namespace Hoki {
 				float finishDist=FMath.Distance(Midpoint,finishPos);
 				if (finishDist>0.1f) {
 					float moveDist=Math.Min(finishSpeed*elapsedTime,finishDist);
-					Vector2 finishMove=Vector2.Scale(finishPos-Midpoint,moveDist/finishDist);
+					Vector2 finishMove=Vector2.Multiply(finishPos-Midpoint,moveDist/finishDist);
 					p1+=finishMove;
 					p2+=finishMove;
 					position+=finishMove;
@@ -149,7 +149,7 @@ namespace Hoki {
 			} else {
 				bool hit=false;			//If there is a collision at any time this frame, it will be stored here
 				Vector2 lf1,lf2;		//Most recently calculated forces for each point
-				lf1=lf2=Vector2.Empty;
+				lf1=lf2=Vector2.Zero;
 
 				//Count down immunity
 				immunity-=elapsedTime;
@@ -164,23 +164,23 @@ namespace Hoki {
 				if (controller.Down(Controls.Down))		move.Y+=tSpeed;
 				if (controller.Down(Controls.A))		speedScale*=aBoost;	//Speed booster keys
 				if (controller.Down(Controls.B))		speedScale*=bBoost;
-				move.Scale(speedScale*elapsedTime);	//Scale the move by dt and applied boost
+				move = Vector2.Multiply(move, speedScale*elapsedTime);	//Scale the move by dt and applied boost
 
 				//Store the particles' current position
 				Vector2 op1=p1,op2=p2;
 				
 				//Cap the force
-				if (f1.Length()>maxForce) f1.Scale(maxForce/f1.Length());
-				if (f2.Length()>maxForce) f2.Scale(maxForce/f2.Length());
+				if (f1.Length()>maxForce) f1 = Vector2.Multiply(f1, maxForce/f1.Length());
+				if (f2.Length()>maxForce) f2 = Vector2.Multiply(f2, maxForce/f2.Length());
 
 				//Move the particles
-				p1+=move+Vector2.Scale(f1+expForce,elapsedTime);
-				p2+=move+Vector2.Scale(f2+expForce,elapsedTime);
+				p1+=move+Vector2.Multiply(f1+expForce,elapsedTime);
+				p2+=move+Vector2.Multiply(f2+expForce,elapsedTime);
 
 				//Scale down the force
-				f1.Scale(1-recover*elapsedTime);
-				f2.Scale(1-recover*elapsedTime);
-				expForce.Scale(1-recover*elapsedTime);
+				f1 = Vector2.Multiply(f1, 1-recover*elapsedTime);
+				f2 = Vector2.Multiply(f2, 1-recover*elapsedTime);
+				expForce = Vector2.Multiply(expForce, 1-recover*elapsedTime);
 
 				//Get the midpoint and rotate the particles
 				Vector2 mp=Midpoint;
@@ -188,7 +188,7 @@ namespace Hoki {
 				FMath.RotatePoint(ref p2,mp,rSpeed*rDirection*elapsedTime);
 
 				Vector2 ix;	//Hold points output by Segment.Intersection
-				Vector2 hitPos=Vector2.Empty;
+				Vector2 hitPos=Vector2.Zero;
 
 				float slope,norm,ang;
 				int side;
@@ -214,7 +214,7 @@ namespace Hoki {
 					//Apply the stick constraint
 					float dist=FMath.Distance(p1,p2);
 					Vector2 diff=p1-p2;
-					diff.Scale((length-dist)/dist*0.5f);
+					diff = Vector2.Multiply(diff, (length-dist)/dist*0.5f);
 					p1+=diff;
 					p2-=diff;
 
@@ -262,7 +262,7 @@ namespace Hoki {
 
 								//Determine force (different if it's a spring)
 								Vector2 force;
-								if (spring) force=Vector2.Scale(((Spring)mapSeg.Object).Forward,bounce/4);	//Project out regardless of side
+								if (spring) force=Vector2.Multiply(((Spring)mapSeg.Object).Forward,bounce/4);	//Project out regardless of side
 								else force=new Vector2(FMath.Cos(norm)*side*delta[i].Length()*bounce,FMath.Sin(norm)*side*delta[i].Length()*bounce);
 
 								if (i==0) {
@@ -290,17 +290,17 @@ namespace Hoki {
 								ratio=FMath.Clamp(FMath.Distance(p1,ix)/length,0,1);
 
 								if (spring) {
-									Vector2 force=Vector2.Scale(((Spring)mapSeg.Object).Forward,bounce/4);	//Project out regardless of side
+									Vector2 force=Vector2.Multiply(((Spring)mapSeg.Object).Forward,bounce/4);	//Project out regardless of side
 									if (r==0) {
-										lf1=Vector2.Scale(force,1-ratio);
-										lf2=Vector2.Scale(force,ratio);
+										lf1=Vector2.Multiply(force,1-ratio);
+										lf2=Vector2.Multiply(force,ratio);
 									}
 
 									hitSpring(mapSeg.Segment,((Spring)mapSeg.Object).Forward,ix,(Spring)mapSeg.Object);
 								} else {
 									if (r==0) {
-										lf1=Vector2.Scale(delta[0],-2*bounce*(1-ratio));
-										lf2=Vector2.Scale(delta[1],-2*bounce*ratio);
+										lf1=Vector2.Multiply(delta[0],-2*bounce*(1-ratio));
+										lf2=Vector2.Multiply(delta[1],-2*bounce*ratio);
 									}
 
 									hitPos=ix;
@@ -345,9 +345,9 @@ namespace Hoki {
 							Vector2 forceUnit=new Vector2(FMath.Cos(ang),FMath.Sin(ang));
 
 							//Apply the force
-							lf1=Vector2.Scale(forceUnit,(1-ratio)*maxForce);
-							lf2=Vector2.Scale(forceUnit,ratio*maxForce);
-							expForce=Vector2.Scale(forceUnit,expPower);
+							lf1=Vector2.Multiply(forceUnit,(1-ratio)*maxForce);
+							lf2=Vector2.Multiply(forceUnit,ratio*maxForce);
+							expForce=Vector2.Multiply(forceUnit,expPower);
 
 							mine.Hit();	//Inform the mine it has been hit
 							i--;		//Step back in the list, since a mine was removed
@@ -402,7 +402,7 @@ namespace Hoki {
 						padTime=padHealthWait;
 						if (health<FullHealth) {
 							health++;
-							HealSound.Play(0,DS.BufferPlayFlags.Default);
+							HealSound.Play(0,DS.PlayFlags.None);
 						}
 					}
 				}
@@ -419,7 +419,7 @@ namespace Hoki {
 			if (springImmunity>0) return;
 
 			//Get the normal that points in the same direction as the heli's centerpoint
-			if (springSeg.Side(Vector2.Add(ix,springNorm))!=springSeg.Side(Midpoint)) springNorm.Scale(-1);
+			if (springSeg.Side(Vector2.Add(ix,springNorm))!=springSeg.Side(Midpoint)) springNorm = Vector2.Multiply(springNorm, -1);
 			Vector2 normPoint=Vector2.Add(ix,springNorm);
                                     
 			//Get the angle between the normal and the heli
@@ -433,8 +433,8 @@ namespace Hoki {
 			this.rDirection=-FMath.Sgn(heliNormAng);
 
 			//Project out
-			p1.Add(springNorm);
-			p2.Add(springNorm);
+			p1 = Vector2.Add(p1, springNorm);
+			p2 = Vector2.Add(p2, springNorm);
 
 			//Let the Spring know it's been hit
 			spring.Hit();
@@ -458,7 +458,7 @@ namespace Hoki {
 		private void onHit(object sender, HitEventArgs e) {
 			if (Game.FXOn && soundWait<0) {
 				soundWait=soundDelay;
-				HitSounds[(currentSound++)%HitSounds.Length].Play(0,DS.BufferPlayFlags.Default);
+				HitSounds[(currentSound++)%HitSounds.Length].Play(0,DS.PlayFlags.None);
 			}
 			map.Explode(e.Position,true);
 		}

@@ -1,7 +1,7 @@
 using System;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using DS=Microsoft.DirectX.DirectSound;
+using SharpDX;
+using SharpDX.Direct3D9;
+using DS=SharpDX.DirectSound;
 using SpriteUtilities;
 using FloatMath;
 
@@ -16,7 +16,7 @@ namespace Hoki {
 		private Vector2 forward;	//Direction the surface is facing
 		private float frameTime;	//if >0, Time until switching frames
 
-		public static DS.SecondaryBuffer[] Sounds;
+		public static DS.SecondarySoundBuffer[] Sounds;
 		private static int currentSound;
 
 		private float soundWait;
@@ -46,10 +46,10 @@ namespace Hoki {
 
 			//Make a segment representative of the surface
 			Vector2 surfaceCenter=forward;
-			surfaceCenter.Scale(tex.Height);
-			surfaceCenter.Add(position);
+			surfaceCenter = Vector2.Multiply(surfaceCenter, tex.Height);
+			surfaceCenter = Vector2.Add(surfaceCenter, position);
 			Vector2 slope=new Vector2(forward.Y,forward.X);
-			slope.Scale(tex.Width/2);
+			slope = Vector2.Multiply(slope, tex.Width/2);
 			surface=new Segment(Vector2.Subtract(surfaceCenter,slope),Vector2.Add(surfaceCenter,slope),null);
 		}
 
@@ -58,7 +58,7 @@ namespace Hoki {
 			frameTime=frameLength;
 			if (Game.FXOn && soundWait<0) {
 				soundWait=soundDelay;
-				Sounds[(currentSound++)%Sounds.Length].Play(0,DS.BufferPlayFlags.Default);
+				Sounds[(currentSound++)%Sounds.Length].Play(0,DS.PlayFlags.None); // PlayFlags.Default
 			}
 		}
 

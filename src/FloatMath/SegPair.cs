@@ -1,5 +1,5 @@
+using SharpDX;
 using System;
-using Microsoft.DirectX;
 
 namespace FloatMath {
 	/// <summary>
@@ -63,7 +63,8 @@ namespace FloatMath {
 
 			//Make the move
 			s1.Translate(move);
-			move.Scale(-1);
+			move = Vector2.Multiply(move, -1);
+			//move.Scale(-1);
 			s2.Translate(move);
 		}
 
@@ -91,7 +92,7 @@ namespace FloatMath {
 		/// <param name="seg2">Segment from SegPair b that intersected</param>
 		public static bool Intersection(SegPair a,SegPair b,out Vector2 point,out Segment seg1,out Segment seg2) {
 			//Assign
-			point=Vector2.Empty;
+			point=Vector2.Zero;
 			seg1=seg2=null;
 
 			//Test collisions
@@ -113,7 +114,7 @@ namespace FloatMath {
 		/// <param name="outseg">Segment in the pair that intersected</param>
 		public static bool Intersection(SegPair pair,Segment seg,out Vector2 point,out Segment outseg) {
 			//Assign
-			point=Vector2.Empty;
+			point=Vector2.Zero;
 			outseg=null;
 
 			//Test collisions

@@ -1,6 +1,6 @@
 using System;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+using SharpDX;
+using SharpDX.Direct3D9;
 using SpriteUtilities;
 
 namespace Hoki {
@@ -9,7 +9,7 @@ namespace Hoki {
 	/// </summary>
 	public class Planet : TransformedObject, Updateable {
 		private VertexBuffer vb;
-		private CustomVertex.PositionColoredTextured[] verts;
+		private PositionColoredTextured[] verts;
 		private Vector2 shiftRate;
 		private Texture tex;
 		private Game owner;
@@ -26,18 +26,19 @@ namespace Hoki {
 
 			myId=id++;
 
-			verts=new CustomVertex.PositionColoredTextured[detail+2];
+			verts=new PositionColoredTextured[detail+2];
 			int white=System.Drawing.Color.White.ToArgb();
 
-			verts[0]=new CustomVertex.PositionColoredTextured(0,0,0,white,0.5f,0.5f);
+			verts[0]=new PositionColoredTextured(0,0,0,white,0.5f,0.5f);
 			for (int i=1;i<=detail+1;i++) {
 				double angle=((double)i)/detail*2*Math.PI;
 				Vector2 v=new Vector2((float)Math.Cos(angle),(float)Math.Sin(angle));
-				verts[i]=new CustomVertex.PositionColoredTextured(radius*v.X,radius*v.Y,0,white,(1f+v.X*texrep)/2f,(1f+v.Y*texrep)/2f);
+				verts[i]=new PositionColoredTextured(radius*v.X,radius*v.Y,0,white,(1f+v.X*texrep)/2f,(1f+v.Y*texrep)/2f);
 			}
 
-			vb=new VertexBuffer(typeof(CustomVertex.PositionColoredTextured),verts.Length,device,Usage.Dynamic|Usage.WriteOnly,CustomVertex.PositionColoredTextured.Format,Pool.Default);
-			vb.SetData(verts,0,LockFlags.None);
+            vb = new VertexBuffer(device, PositionColoredTextured.StrideSize * verts.Length, Usage.Dynamic | Usage.WriteOnly, PositionColoredTextured.Format, Pool.Default);
+            //vb =new VertexBuffer(typeof(PositionColoredTextured),verts.Length,device,Usage.Dynamic|Usage.WriteOnly,PositionColoredTextured.Format,Pool.Default);
+			vb.Lock(0, 0, LockFlags.None).WriteRange(verts);
 
 			SpriteObject sphere=new SpriteObject(device,sphereTex);
 			sphere.Width=sphere.Height=2*radius;
@@ -58,17 +59,17 @@ namespace Hoki {
 					verts[i].Tu+=shiftRate.X*elapsedTime;
 					verts[i].Tv+=shiftRate.Y*elapsedTime;
 				}
-				vb.SetData(verts,0,LockFlags.None);
+				vb.Lock(0, 0, LockFlags.None).WriteRange(verts);
 			}
 		}
 		#endregion
 
 		protected override void deviceDraw(Matrix trans) {
 			//Set pipeline state
-			device.Transform.World=trans;
-			device.SetStreamSource(0,vb,0);
+			device.SetTransform(TransformState.World, trans);
+			device.SetStreamSource(0,vb,0, PositionColoredTextured.StrideSize);
 			device.SetTexture(0,tex);
-			device.VertexFormat=CustomVertex.PositionColoredTextured.Format;
+			device.VertexFormat=PositionColoredTextured.Format;
 
 			device.DrawPrimitives(PrimitiveType.TriangleFan,0,verts.Length-2);
 		}

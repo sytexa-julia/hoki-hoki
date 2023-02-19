@@ -1,7 +1,7 @@
 using System;
-using System.Drawing;
 using System.Windows.Forms;
-using Microsoft.DirectX.Direct3D;
+using SharpDX;
+using SharpDX.Direct3D9;
 using SpriteUtilities;
 
 namespace Hoki {
@@ -19,7 +19,7 @@ namespace Hoki {
 			set { defaultCleared=value; }
 		}
 
-		public TextBox(Device device,SpriteTexture leftTex,SpriteTexture middleTex,SpriteTexture rightTex,Sprite sprite,Microsoft.DirectX.Direct3D.Font font,float width,int maxLength,Form form,Menu parent) : base(device,leftTex,middleTex,rightTex,sprite,font,width) {
+		public TextBox(Device device,SpriteTexture leftTex,SpriteTexture middleTex,SpriteTexture rightTex,Sprite sprite, SharpDX.Direct3D9.Font font,float width,int maxLength,Form form,Menu parent) : base(device,leftTex,middleTex,rightTex,sprite,font,width) {
 			this.form=form;
 			form.KeyPress+=new KeyPressEventHandler(onKeyPress);
 			this.maxLength=maxLength;

@@ -1,366 +1,210 @@
-<VisualStudioProject>
-    <CSHARP
-        ProjectType = "Local"
-        ProductVersion = "7.10.3077"
-        SchemaVersion = "2.0"
-        ProjectGuid = "{AD870BC0-EB07-4901-8654-97A9B775B3C2}"
-    >
-        <Build>
-            <Settings
-                ApplicationIcon = "App.ico"
-                AssemblyKeyContainerName = ""
-                AssemblyName = "HokiEdit"
-                AssemblyOriginatorKeyFile = ""
-                DefaultClientScript = "JScript"
-                DefaultHTMLPageLayout = "Grid"
-                DefaultTargetSchema = "IE50"
-                DelaySign = "false"
-                OutputType = "WinExe"
-                PreBuildEvent = ""
-                PostBuildEvent = ""
-                RootNamespace = "HokiEdit"
-                RunPostBuildEvent = "OnBuildSuccess"
-                StartupObject = ""
-            >
-                <Config
-                    Name = "Debug"
-                    AllowUnsafeBlocks = "false"
-                    BaseAddress = "285212672"
-                    CheckForOverflowUnderflow = "false"
-                    ConfigurationOverrideFile = ""
-                    DefineConstants = "DEBUG;TRACE"
-                    DocumentationFile = ""
-                    DebugSymbols = "true"
-                    FileAlignment = "4096"
-                    IncrementalBuild = "false"
-                    NoStdLib = "false"
-                    NoWarn = ""
-                    Optimize = "false"
-                    OutputPath = "bin\Debug\"
-                    RegisterForComInterop = "false"
-                    RemoveIntegerChecks = "false"
-                    TreatWarningsAsErrors = "false"
-                    WarningLevel = "4"
-                />
-                <Config
-                    Name = "Release"
-                    AllowUnsafeBlocks = "false"
-                    BaseAddress = "285212672"
-                    CheckForOverflowUnderflow = "false"
-                    ConfigurationOverrideFile = ""
-                    DefineConstants = "TRACE"
-                    DocumentationFile = ""
-                    DebugSymbols = "false"
-                    FileAlignment = "4096"
-                    IncrementalBuild = "false"
-                    NoStdLib = "false"
-                    NoWarn = ""
-                    Optimize = "true"
-                    OutputPath = "bin\Release\"
-                    RegisterForComInterop = "false"
-                    RemoveIntegerChecks = "false"
-                    TreatWarningsAsErrors = "false"
-                    WarningLevel = "4"
-                />
-            </Settings>
-            <References>
-                <Reference
-                    Name = "System"
-                    AssemblyName = "System"
-                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.dll"
-                />
-                <Reference
-                    Name = "System.Data"
-                    AssemblyName = "System.Data"
-                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Data.dll"
-                />
-                <Reference
-                    Name = "System.Drawing"
-                    AssemblyName = "System.Drawing"
-                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Drawing.dll"
-                />
-                <Reference
-                    Name = "System.Windows.Forms"
-                    AssemblyName = "System.Windows.Forms"
-                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Windows.Forms.dll"
-                />
-                <Reference
-                    Name = "System.XML"
-                    AssemblyName = "System.Xml"
-                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.XML.dll"
-                />
-                <Reference
-                    Name = "FloatMath"
-                    Project = "{7A4827BD-2462-4E4D-BCE1-E7D3A8ED3B54}"
-                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
-                />
-                <Reference
-                    Name = "SpriteMenu"
-                    Project = "{8B6085F2-D940-4308-A778-B59E57D2C004}"
-                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
-                />
-                <Reference
-                    Name = "SpriteUtilities"
-                    Project = "{C7E15C1D-8AAA-4374-B78E-32A04A4F4DB9}"
-                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
-                />
-                <Reference
-                    Name = "Microsoft.DirectX"
-                    AssemblyName = "Microsoft.DirectX"
-                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.dll"
-                    AssemblyFolderKey = "hklm\dn\dx_1.0.2902.0"
-                />
-                <Reference
-                    Name = "Microsoft.DirectX.Direct3D"
-                    AssemblyName = "Microsoft.DirectX.Direct3D"
-                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.Direct3D.dll"
-                    AssemblyFolderKey = "hklm\dn\dx_1.0.2902.0"
-                />
-                <Reference
-                    Name = "Microsoft.DirectX.Direct3DX"
-                    AssemblyName = "Microsoft.DirectX.Direct3DX"
-                    HintPath = "..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2909.0\Microsoft.DirectX.Direct3DX.dll"
-                    AssemblyFolderKey = "hklm\dn\dx_1.0.2909.0"
-                />
-            </References>
-        </Build>
-        <Files>
-            <Include>
-                <File
-                    RelPath = "App.ico"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "AssemblyInfo.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "DXUtil.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Editor.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Editor.resx"
-                    DependentUpon = "Editor.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "Launcher.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Line.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "MapElement.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Node.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Pad.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "SettingsForm.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "SettingsForm.resx"
-                    DependentUpon = "SettingsForm.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "SizeTexture.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Spring.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "SpriteArrow.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "SpriteMarker.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Tool.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "Triangle.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "cursors\empty.cur"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\cursor.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\skin.png"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\button\tool.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\button\left.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\button\middle.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\button\right.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\slider\end.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\slider\groove.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\slider\knob.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\window\background.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\window\blc.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\window\bottom.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\window\brc.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\window\left.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\window\right.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\window\tlc.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\window\top.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\menu\window\trc.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\toolbar\launcher.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\toolbar\line.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\toolbar\node.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\toolbar\pad.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\toolbar\pencil.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\toolbar\poly.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\toolbar\selector.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\toolbar\spring.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\toolbar\sprite.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\toolbar\toolbar.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\workspace\launcher.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\workspace\node.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\workspace\slammer.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\workspace\spring.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\workspace\sprite.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\workspace\stopper.dat"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "textures\workspace\tri.bmp"
-                    BuildAction = "EmbeddedResource"
-                />
-            </Include>
-        </Files>
-    </CSHARP>
-</VisualStudioProject>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>7.10.3077</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AD870BC0-EB07-4901-8654-97A9B775B3C2}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+    <AssemblyKeyContainerName />
+    <AssemblyName>HokiEdit</AssemblyName>
+    <AssemblyOriginatorKeyFile />
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>HokiEdit</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>0.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FloatMath\FloatMath.csproj">
+      <Name>FloatMath</Name>
+      <Project>{7A4827BD-2462-4E4D-BCE1-E7D3A8ED3B54}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\SpriteMenu\SpriteMenu.csproj">
+      <Name>SpriteMenu</Name>
+      <Project>{8B6085F2-D940-4308-A778-B59E57D2C004}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\SpriteUtilities\SpriteUtilities.csproj">
+      <Name>SpriteUtilities</Name>
+      <Project>{C7E15C1D-8AAA-4374-B78E-32A04A4F4DB9}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <Reference Include="Microsoft.DirectX">
+      <Name>Microsoft.DirectX</Name>
+      <HintPath>..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.dll</HintPath>
+      <AssemblyFolderKey>hklm\dn\dx_1.0.2902.0</AssemblyFolderKey>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3D">
+      <Name>Microsoft.DirectX.Direct3D</Name>
+      <HintPath>..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.Direct3D.dll</HintPath>
+      <AssemblyFolderKey>hklm\dn\dx_1.0.2902.0</AssemblyFolderKey>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3DX">
+      <Name>Microsoft.DirectX.Direct3DX</Name>
+      <HintPath>..\..\..\..\..\WINDOWS\Microsoft.NET\DirectX for Managed Code\1.0.2909.0\Microsoft.DirectX.Direct3DX.dll</HintPath>
+      <AssemblyFolderKey>hklm\dn\dx_1.0.2909.0</AssemblyFolderKey>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DXUtil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Launcher.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Line.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MapElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Node.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pad.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SizeTexture.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Spring.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SpriteArrow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SpriteMarker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tool.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Triangle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Content Include="App.ico" />
+    <EmbeddedResource Include="cursors\empty.cur" />
+    <EmbeddedResource Include="Editor.resx">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="textures\button\tool.dat" />
+    <EmbeddedResource Include="textures\cursor.dat" />
+    <EmbeddedResource Include="textures\menu\button\left.dat" />
+    <EmbeddedResource Include="textures\menu\button\middle.dat" />
+    <EmbeddedResource Include="textures\menu\button\right.dat" />
+    <EmbeddedResource Include="textures\menu\slider\end.dat" />
+    <EmbeddedResource Include="textures\menu\slider\groove.dat" />
+    <EmbeddedResource Include="textures\menu\slider\knob.dat" />
+    <EmbeddedResource Include="textures\menu\window\background.dat" />
+    <EmbeddedResource Include="textures\menu\window\blc.dat" />
+    <EmbeddedResource Include="textures\menu\window\bottom.dat" />
+    <EmbeddedResource Include="textures\menu\window\brc.dat" />
+    <EmbeddedResource Include="textures\menu\window\left.dat" />
+    <EmbeddedResource Include="textures\menu\window\right.dat" />
+    <EmbeddedResource Include="textures\menu\window\tlc.dat" />
+    <EmbeddedResource Include="textures\menu\window\top.dat" />
+    <EmbeddedResource Include="textures\menu\window\trc.dat" />
+    <EmbeddedResource Include="textures\skin.png" />
+    <EmbeddedResource Include="textures\toolbar\launcher.dat" />
+    <EmbeddedResource Include="textures\toolbar\line.dat" />
+    <EmbeddedResource Include="textures\toolbar\node.dat" />
+    <EmbeddedResource Include="textures\toolbar\pad.dat" />
+    <EmbeddedResource Include="textures\toolbar\pencil.dat" />
+    <EmbeddedResource Include="textures\toolbar\poly.dat" />
+    <EmbeddedResource Include="textures\toolbar\selector.dat" />
+    <EmbeddedResource Include="textures\toolbar\spring.dat" />
+    <EmbeddedResource Include="textures\toolbar\sprite.dat" />
+    <EmbeddedResource Include="textures\toolbar\toolbar.dat" />
+    <EmbeddedResource Include="textures\workspace\launcher.dat" />
+    <EmbeddedResource Include="textures\workspace\node.dat" />
+    <EmbeddedResource Include="textures\workspace\slammer.dat" />
+    <EmbeddedResource Include="textures\workspace\spring.dat" />
+    <EmbeddedResource Include="textures\workspace\sprite.dat" />
+    <EmbeddedResource Include="textures\workspace\stopper.dat" />
+    <EmbeddedResource Include="textures\workspace\tri.bmp" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>

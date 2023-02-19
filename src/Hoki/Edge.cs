@@ -1,6 +1,6 @@
 using System;
 using FloatMath;
-using Microsoft.DirectX;
+using SharpDX;
 
 namespace Hoki {
 	/// <summary>

@@ -1,9 +1,9 @@
 using System;
 using System.Drawing;
 using System.Collections;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
 using FloatMath;
+using SharpDX;
+using SharpDX.Direct3D9;
 
 namespace SpriteUtilities {
 
@@ -33,8 +33,8 @@ namespace SpriteUtilities {
 			visible,	//If false, calls to Draw() will be skipped
 			bufferNeedsUpdate,	//If true, will reset the buffer data before drawing
 			colorNeedsUpdate;	//If true, will reset the vertices' color before drawing
-		protected Color
-			localColor,	//Local tint
+		protected System.Drawing.Color
+            localColor,	//Local tint
 			color;		//Absolute tint
 
 		#region const
@@ -117,7 +117,7 @@ namespace SpriteUtilities {
 		/// <summary>
 		/// Colors the sprite (a value of Color.White leaves it unchanged)
 		/// </summary>
-		virtual public Color Tint {
+		virtual public System.Drawing.Color Tint {
 			get { return color; }
 			set {
 				localColor=value;
@@ -164,7 +164,7 @@ namespace SpriteUtilities {
 			origin=new Vector2();
 			scale=new Vector2(1.0f,1.0f);
 			alpha=localAlpha=255;
-			color=localColor=Color.White;
+			color=localColor= System.Drawing.Color.White;
 			rotation=0;
 			visible=true;
 		}
@@ -222,7 +222,7 @@ namespace SpriteUtilities {
 
 		#region transformations
 		public Matrix OriginTransform() {
-			return Matrix.Transformation2D(Vector2.Empty,0,new Vector2(1,1),Vector2.Empty,0,Vector2.Scale(origin,-1));
+			return Matrix.Transformation2D(Vector2.Zero,0,new Vector2(1,1),Vector2.Zero,0,Vector2.Multiply(origin,-1));
 		}
 
 		public Matrix AbsoluteTransform() {
@@ -231,7 +231,7 @@ namespace SpriteUtilities {
 		}
 
 		protected Matrix LocalTransform() {
-			return Matrix.Transformation2D(origin,0.0f,scale,Vector2.Empty,rotation,coords);
+			return Matrix.Transformation2D(origin,0.0f,scale,Vector2.Zero,rotation,coords);
 		}
 
 		/// <summary>
@@ -252,8 +252,9 @@ namespace SpriteUtilities {
 			//Work through the stack
 			while (ancestors.Count>0) {
 				current=(TransformedObject)ancestors.Pop();
-				globalPoint.TransformCoordinate(Matrix.Invert(current.LocalTransform()));
-			}
+                globalPoint = Vector2.TransformCoordinate(globalPoint, Matrix.Invert(current.LocalTransform()));
+                //globalPoint.TransformCoordinate(Matrix.Invert(current.LocalTransform()));
+            }
 		}
 
 		/// <summary>
@@ -262,7 +263,8 @@ namespace SpriteUtilities {
 		public void LocalToGlobal(ref Vector2 localPoint) {
 			TransformedObject current=this;
 			while (current!=null) {
-				localPoint.TransformCoordinate(current.LocalTransform());
+                localPoint = Vector2.TransformCoordinate(localPoint, current.LocalTransform());
+                //localPoint.TransformCoordinate(current.LocalTransform());
 				current=current.parent;
 			}
 		}
@@ -271,15 +273,16 @@ namespace SpriteUtilities {
 		/// Converts a point in local coordinate space to the parent's coordinate space in place
 		/// </summary>
 		public void LocalToParent(ref Vector2 localPoint) {
-			localPoint.TransformCoordinate(LocalTransform());
+			localPoint = Vector2.TransformCoordinate(localPoint, LocalTransform());
 		}
 
 		/// <summary>
 		/// Converts a point in the parent's coordinate space to local coordinate space in place
 		/// </summary>
 		public void ParentToLocal(ref Vector2 parentPoint) {
-			parentPoint.TransformCoordinate(Matrix.Invert(LocalTransform()));
-		}
+            parentPoint = Vector2.TransformCoordinate(parentPoint, Matrix.Invert(LocalTransform()));
+            //parentPoint.TransformCoordinate(Matrix.Invert(LocalTransform()));
+        }
 
 		/// <summary>
 		/// Converts a point in local coordinate space to another object's coordinate space
@@ -318,7 +321,7 @@ namespace SpriteUtilities {
 		/// </summary>
 		virtual public void Draw() {
 			if (!visible) return;
-			Draw(Matrix.Identity,Vector2.Empty);
+			Draw(Matrix.Identity,Vector2.Zero);
 		}
 
 		/// <summary>

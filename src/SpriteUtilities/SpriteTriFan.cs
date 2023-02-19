@@ -1,13 +1,13 @@
 using System;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+using SharpDX;
+using SharpDX.Direct3D9;
 
 namespace SpriteUtilities {
 	/// <summary>
 	/// Triangle fan that can be transformed as an EffectObject TODO: Implement tint changes
 	/// </summary>
 	public class SpriteTriFan : EffectObject {
-		private CustomVertex.PositionColoredTextured[] verts;
+		private PositionColoredTextured[] verts;
 		private VertexBuffer vb;
 
 		private SpriteTexture tex;
@@ -17,20 +17,22 @@ namespace SpriteUtilities {
 			this.tex=tex;
 
 			//Create a vertex list
-			verts=new CustomVertex.PositionColoredTextured[vertices.Length];
+			verts=new PositionColoredTextured[vertices.Length];
 			for (int i=0;i<vertices.Length;i++)
-				verts[i]=new CustomVertex.PositionColoredTextured(vertices[i].X,vertices[i].Y,1.0f,System.Drawing.Color.White.ToArgb(),texCoords[i].X,texCoords[i].Y);
+				verts[i]=new PositionColoredTextured(vertices[i].X,vertices[i].Y,1.0f,System.Drawing.Color.White.ToArgb(),texCoords[i].X,texCoords[i].Y);
 
-			//Make a vertex buffer
-			vb=new VertexBuffer(typeof(CustomVertex.PositionColoredTextured),verts.Length,device,Usage.Dynamic | Usage.WriteOnly,CustomVertex.PositionColoredTextured.Format,Pool.Default);
-			vb.SetData(verts,0,LockFlags.Discard);
+            //Make a vertex buffer
+            vb = new VertexBuffer(device, PositionColoredTextured.StrideSize * verts.Length, Usage.Dynamic | Usage.WriteOnly, PositionColoredTextured.Format, Pool.Default);
+            //vb=new VertexBuffer(typeof(PositionColoredTextured),verts.Length,device,Usage.Dynamic | Usage.WriteOnly,CustomVertex.PositionColoredTextured.Format,Pool.Default);
+            vb.Lock(0, 0, LockFlags.Discard).WriteRange(verts);
+			vb.Unlock();
 		}
 
 
 		protected override void deviceDraw(Matrix trans) {
 			//Set pipeline state
-			device.Transform.World=trans;
-			device.SetStreamSource(0,vb,0);
+			device.SetTransform(TransformState.World, trans);
+			device.SetStreamSource(0,vb,0,PositionColoredTextured.StrideSize);
 			device.SetTexture(0,tex.Tex);
 
 			if (current!=null) { //Method 1: use an effect (if the base class set one)
@@ -61,7 +63,7 @@ namespace SpriteUtilities {
 						current.SetValue(fxc.Name,new Vector4(color.R,color.G,color.B,color.A));
 						break;
 					case ConstType.Texture:
-						if (tex!=null) current.SetValue(fxc.Name,tex.Tex); //Can't set with a null tex, but it doesn't matter because the effect routine won't be run
+						if (tex!=null) current.SetTexture(fxc.Name,tex.Tex); //Can't set with a null tex, but it doesn't matter because the effect routine won't be run
 						break;
 					case ConstType.WorldMatrix:
 						current.SetValue(fxc.Name,trans);

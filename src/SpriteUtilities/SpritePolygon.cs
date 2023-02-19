@@ -1,7 +1,6 @@
+using SharpDX;
+using SharpDX.Direct3D9;
 using System;
-using System.Drawing;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
 
 namespace SpriteUtilities {
 	/// <summary>
@@ -10,13 +9,13 @@ namespace SpriteUtilities {
 	public class SpritePolygon : EffectObject {
 		private IndexBuffer ib;
 		private VertexBuffer vb;
-		private CustomVertex.PositionColoredTextured[] verts;
+		private PositionColoredTextured[] verts;
 
 		private Vector2 size;
 		private SpriteTexture tex;
 		private int numIndices,numVertices;
 		private bool useIB;
-		private VertexFormats format=CustomVertex.PositionColoredTextured.Format;
+		private VertexFormat format=PositionColoredTextured.Format;
 
 		public SpritePolygon(Device device,SpriteTexture tex) : base(device) {
 			//Store tex reference
@@ -57,16 +56,17 @@ namespace SpriteUtilities {
 			set { YScale=value/size.Y; }
 		}
 
-		public override Color Tint {
+		public override System.Drawing.Color Tint {
 			get { return base.Tint; }
 			set {
 				base.Tint = value;
 				for (int i=0;i<verts.Length;i++) verts[i].Color=value.ToArgb();
-				vb.SetData(verts,0,LockFlags.Discard);
+				vb.Lock(0, 0, LockFlags.Discard).WriteRange(verts);
+				vb.Unlock();
 			}
 		}
 
-		public VertexFormats Format {
+		public VertexFormat Format {
 			get { return format; }
 			set { format=value; }
 		}
@@ -77,9 +77,14 @@ namespace SpriteUtilities {
 				max=new Vector2(float.NegativeInfinity,float.NegativeInfinity);
 
 			//Create vertices
-			verts=new CustomVertex.PositionColoredTextured[vertices.Length];
+			verts=new PositionColoredTextured[vertices.Length];
 			for (int i=0;i<vertices.Length;i++) {
-				verts[i]=new CustomVertex.PositionColoredTextured(vertices[i].X,vertices[i].Y,1.0f,Color.White.ToArgb(),vertices[i].X/tex.Width,vertices[i].Y/tex.Height);
+				verts[i]=new PositionColoredTextured(vertices[i].X,
+					vertices[i].Y,
+					1.0f,
+					Color.White.ToBgra(),//Color.White.ToArgb(),
+					vertices[i].X/tex.Width,
+					vertices[i].Y/tex.Height);
 				min.X=Math.Min(vertices[i].X,min.X);
 				min.Y=Math.Min(vertices[i].Y,min.Y);
 				max.X=Math.Max(vertices[i].X,max.X);
@@ -106,15 +111,17 @@ namespace SpriteUtilities {
 			useIB=true;
 		}
 
-		public void Build(CustomVertex.PositionColoredTextured[] verts) {
+		public void Build(PositionColoredTextured[] verts) {
 			numVertices=verts.Length;
-			vb=new VertexBuffer(typeof(CustomVertex.PositionColoredTextured),verts.Length,device,Usage.Dynamic | Usage.WriteOnly,CustomVertex.PositionColoredTextured.Format,Pool.Default);
-			vb.SetData(verts,0,LockFlags.Discard);
+            vb = new VertexBuffer(device, PositionColoredTextured.StrideSize * verts.Length, Usage.Dynamic | Usage.WriteOnly, PositionColoredTextured.Format, Pool.Default);
+            //vb=new VertexBuffer(typeof(PositionColoredTextured),verts.Length,device,Usage.Dynamic | Usage.WriteOnly,CustomVertex.PositionColoredTextured.Format,Pool.Default);
+            vb.Lock(0, 0, LockFlags.Discard).WriteRange(verts);
+			vb.Unlock();
 
 			useIB=false;
 		}
 
-		public void Build(CustomVertex.PositionColoredTextured[] verts,short[] indices) {
+		public void Build(PositionColoredTextured[] verts,short[] indices) {
 			Build(verts);
 			makeIB(indices);
 			useIB=true;
@@ -123,15 +130,17 @@ namespace SpriteUtilities {
 		private void makeIB(short[] indices) {
 			//Make an index buffer
 			numIndices=indices.Length;
-			ib=new IndexBuffer(typeof(short),indices.Length,device,Usage.Dynamic|Usage.WriteOnly,Pool.Default);
+            ib = new IndexBuffer(device, sizeof(short) * indices.Length, Usage.Dynamic | Usage.WriteOnly, Pool.Default, false);
+            //ib=new IndexBuffer(typeof(short),indices.Length,device,Usage.Dynamic|Usage.WriteOnly,Pool.Default);
 
-			ib.SetData(indices,0,LockFlags.Discard);
+			ib.Lock(0, 0, LockFlags.Discard).WriteRange(indices);
+			ib.Unlock();
 		}
 
 		protected override void deviceDraw(Matrix trans) {
 			//Set pipeline state
-			device.Transform.World=trans;
-			device.SetStreamSource(0,vb,0);
+			device.SetTransform(TransformState.World, trans);
+			device.SetStreamSource(0,vb,0, PositionColoredTextured.StrideSize);
 			device.SetTexture(0,tex.Tex);
 
 			if (current!=null) { //Method 1: use an effect (if the base class set one)
@@ -154,7 +163,7 @@ namespace SpriteUtilities {
 		private void drawPrimitives() {
 			if (useIB) {
 				device.Indices=ib;
-				device.DrawIndexedPrimitives(PrimitiveType.TriangleList,0,0,numVertices,0,numIndices/3);
+				device.DrawIndexedPrimitive(PrimitiveType.TriangleList,0,0,numVertices,0,numIndices/3);
 			} else device.DrawPrimitives(PrimitiveType.TriangleList,0,numVertices/3);
 		}
 
@@ -165,7 +174,7 @@ namespace SpriteUtilities {
 						current.SetValue(fxc.Name,new Vector4(color.R,color.G,color.B,color.A));
 						break;
 					case ConstType.Texture:
-						if (tex!=null) current.SetValue(fxc.Name,tex.Tex); //Can't set with a null tex, but it doesn't matter because the effect routine won't be run
+						if (tex!=null) current.SetTexture(fxc.Name,tex.Tex); //Can't set with a null tex, but it doesn't matter because the effect routine won't be run
 						break;
 					case ConstType.WorldMatrix:
 						current.SetValue(fxc.Name,trans);

@@ -2,8 +2,8 @@ using System;
 using System.Collections;	//DEBUG
 using System.IO;
 using System.Drawing;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+using SharpDX;
+using SharpDX.Direct3D9;
 
 namespace SpriteUtilities {
 	/// <summary>

@@ -2,8 +2,8 @@ using System;
 using System.Drawing;
 using System.Collections;
 using System.Windows.Forms;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+using SharpDX;
+using SharpDX.Direct3D9;
 using SpriteUtilities;
 
 namespace Hoki {

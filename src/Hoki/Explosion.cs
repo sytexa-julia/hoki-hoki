@@ -1,7 +1,7 @@
 using System;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using DS=Microsoft.DirectX.DirectSound;
+using SharpDX;
+using SharpDX.Direct3D9;
+using DS=SharpDX.DirectSound;
 using SpriteUtilities;
 using FloatMath;
 
@@ -15,7 +15,7 @@ namespace Hoki {
 
 		public event EventHandler Die;
 		
-		public static DS.SecondaryBuffer[] Sounds;
+		public static DS.SecondarySoundBuffer[] Sounds;
 		private static int currentSound;
 		private bool spark;
 
@@ -33,7 +33,7 @@ namespace Hoki {
 				Add((SpriteObject)particles[i]);
 			}
 
-			if (!spark && Game.FXOn) Sounds[(currentSound++)%Sounds.Length].Play(0,DS.BufferPlayFlags.Default);
+			if (!spark && Game.FXOn) Sounds[(currentSound++)%Sounds.Length].Play(0,DS.PlayFlags.None);
 		}
 		
 		private void onParticleDie(object sender, EventArgs e) {
@@ -97,19 +97,21 @@ namespace Hoki {
 			#endregion
 
 			protected override void deviceDraw(Matrix trans) {
-				bool changeSource=(device.RenderState.SourceBlend!=Blend.SourceAlpha);
-				bool changeDest=(device.RenderState.DestinationBlend!=Blend.One);
+				var oldSourceBlend = device.GetRenderState<Blend>(RenderState.SourceBlend);
+				var oldDestBlend = device.GetRenderState<Blend>(RenderState.DestinationBlend);
+				bool changeSource=(oldSourceBlend != Blend.SourceAlpha);
+				bool changeDest=(oldDestBlend!=Blend.One);
 
 				//Switch to an additive blend
-				if (changeSource) device.RenderState.SourceBlend=Blend.SourceAlpha;
-				if (changeDest) device.RenderState.DestinationBlend=Blend.One;
+				if (changeSource) device.SetRenderState(RenderState.SourceBlend,Blend.SourceAlpha);
+				if (changeDest) device.SetRenderState(RenderState.DebugMonitorToken, Blend.One);
 
-				base.deviceDraw(trans);
+                base.deviceDraw(trans);
 
 				//Switch back to a regular blend
-				if (changeSource) device.RenderState.SourceBlend=Blend.SourceAlpha;
-				if (changeDest) device.RenderState.DestinationBlend=Blend.InvSourceAlpha;
-			}
+				if (changeSource) device.SetRenderState(RenderState.SourceBlend, Blend.SourceAlpha);
+                if (changeDest) device.SetRenderState(RenderState.SourceBlend, Blend.InverseSourceAlpha);
+            }
 		}
 		
 		/// <summary>

@@ -1,8 +1,8 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+using SharpDX;
+using SharpDX.Direct3D9;
 using SpriteUtilities;
 
 namespace Hoki {
@@ -62,7 +62,7 @@ namespace Hoki {
 				if (Math.Abs(bg-bgTarget)<0.5f) bg=bgTarget;
 
 				//Adjust the sprite's tint value
-				Tint=Color.FromArgb(255,(int)bg,(int)bg);
+				Tint= System.Drawing.Color.FromArgb(255,(int)bg,(int)bg);
 			}
 
 			//Move closer to the targeted offset

@@ -1,5 +1,6 @@
+using SharpDX;
 using System;
-using Microsoft.DirectX;
+
 
 namespace FloatMath {
 	/// <summary>

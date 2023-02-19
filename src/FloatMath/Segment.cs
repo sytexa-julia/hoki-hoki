@@ -1,5 +1,5 @@
+using SharpDX;
 using System;
-using Microsoft.DirectX;
 
 namespace FloatMath {
 	/// <summary>
@@ -33,7 +33,8 @@ namespace FloatMath {
 			get { return FMath.Distance(P1,P2); }
 			set {
 				Vector2 dir=Vector2.Subtract(p2,p1);
-				dir.Scale(value/Length);
+				dir = Vector2.Multiply(dir, value/Length);
+				//dir.Scale(value/Length);
 				p2.X=p1.X+dir.X;
 				p2.Y=p1.Y+dir.Y;
 			}

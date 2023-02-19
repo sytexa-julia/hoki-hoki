@@ -1,6 +1,6 @@
 using System;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+using SharpDX;
+using SharpDX.Direct3D9;
 using FloatMath;
 using SpriteUtilities;
 

@@ -1,6 +1,7 @@
+using SharpDX;
+using SharpDX.Direct3D9;
 using System;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SpriteUtilities {
 	/// <summary>
@@ -9,20 +10,21 @@ namespace SpriteUtilities {
 	public abstract class ParticleEffect : EffectObject,Updateable {
 		private VertexBuffer vb;
 		private Texture tex;
-		protected CustomVertex.PositionColoredTextured[] verts;
+		protected PositionColoredTextured[] verts;
 		protected Particle[] particles;
 
 		public ParticleEffect(Device device,Texture tex,int particleCount) : base(device) {
 			//Make particle and vertex arrays
 			particles=new Particle[particleCount];
-			verts=new CustomVertex.PositionColoredTextured[particleCount];
+			verts=new PositionColoredTextured[particleCount];
 
 			//Initialize the particles
 			for (int i=0;i<particleCount;i++) generateParticle(i);
 
 
 			//Make a vertex buffer
-			vb=new VertexBuffer(typeof(CustomVertex.PositionColoredTextured),particleCount,device,Usage.Dynamic | Usage.WriteOnly,CustomVertex.PositionColoredTextured.Format,Pool.Default);
+            vb = new VertexBuffer(device, PositionColoredTextured.StrideSize * particleCount, Usage.Dynamic | Usage.WriteOnly, PositionColoredTextured.Format, Pool.Default);
+            //vb =new VertexBuffer(typeof(PositionColoredTextured),particleCount,device,Usage.Dynamic | Usage.WriteOnly,CustomVertex.PositionColoredTextured.Format,Pool.Default);
 
 			//Store the texture reference
 			this.tex=tex;
@@ -33,15 +35,17 @@ namespace SpriteUtilities {
 		/// </summary>
 		protected abstract void generateParticle(int index);
 
-		protected override void deviceDraw(Microsoft.DirectX.Matrix trans) {
+		protected override void deviceDraw(Matrix trans) {
 			//Update the vertex buffer
-			vb.SetData(verts,0,LockFlags.Discard);
+			vb.Lock(0, 0, LockFlags.Discard).WriteRange(verts);
+			vb.Unlock();
 
 			base.deviceDraw(trans);
 			if (tex!=null) { //If a texture has been provided, draw
 				//Set pipeline state
-				device.Transform.World=trans;
-				device.SetStreamSource(0,vb,0);
+				device.SetTransform(TransformState.World, trans);
+				
+				device.SetStreamSource(0,vb,0, PositionColoredTextured.StrideSize);
 				device.SetTexture(0,tex);
 
 				if (current!=null) { //Method 1: use an effect (if the base class set one)
@@ -73,7 +77,7 @@ namespace SpriteUtilities {
 						current.SetValue(fxc.Name,new Vector4(color.R,color.G,color.B,color.A));
 						break;
 					case ConstType.Texture:
-						if (tex!=null) current.SetValue(fxc.Name,tex); //Can't set with a null tex, but it doesn't matter because the effect routine won't be run
+						if (tex != null) current.SetTexture(fxc.Name, tex); //Can't set with a null tex, but it doesn't matter because the effect routine won't be run
 						break;
 					case ConstType.WorldMatrix:
 						current.SetValue(fxc.Name,trans);

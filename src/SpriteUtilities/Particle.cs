@@ -1,5 +1,5 @@
+using SharpDX;
 using System;
-using Microsoft.DirectX;
 
 namespace SpriteUtilities {
 	/// <summary>
@@ -29,9 +29,9 @@ namespace SpriteUtilities {
 
 		#region Updateable Members
 		public void Update(float elapsedTime) {
-			Position+=Vector2.Scale(Velocity,elapsedTime);
-			Velocity+=Vector2.Scale(Acceleration,elapsedTime);
-			Color+=Vector3.Scale(ColorChange,elapsedTime);
+			Position+=Vector2.Multiply(Velocity,elapsedTime);
+			Velocity+=Vector2.Multiply(Acceleration,elapsedTime);
+			Color+=Vector3.Multiply(ColorChange,elapsedTime);
 			Alpha-=Fade*elapsedTime;
 			System.Diagnostics.Trace.WriteLine("P "+Position.X+","+Position.Y);
 		}

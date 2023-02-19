@@ -1,5 +1,5 @@
 using System;
-using Microsoft.DirectX.Direct3D;
+using SharpDX.Direct3D9;
 using SpriteUtilities;
 
 namespace Hoki {

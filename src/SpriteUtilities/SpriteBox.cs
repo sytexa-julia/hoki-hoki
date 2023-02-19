@@ -1,8 +1,8 @@
 using System;
 using System.Drawing;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
 using FloatMath;
+using SharpDX;
+using SharpDX.Direct3D9;
 
 namespace SpriteUtilities {
 	/// <summary>
@@ -41,7 +41,7 @@ namespace SpriteUtilities {
 			}
 		}
 
-		public override Color Tint {
+		public override System.Drawing.Color Tint {
 			get { return base.Tint; }
 			set {
 				base.Tint=value;

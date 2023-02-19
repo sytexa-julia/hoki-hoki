@@ -1,20 +1,21 @@
+using SharpDX;
+//using SharpDX.Direct2D1;
 using System;
 using System.Collections;
-using System.Drawing;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using D3D=Microsoft.DirectX.Direct3D;
+//using SharpDX.DirectWrite;
+using SharpDX.Direct3D9;
 
 namespace SpriteUtilities {
-	/// <summary>
-	/// SpriteObject derivative that draws text
-	/// </summary>
-	public class SpriteText : SpriteObject{
+
+    /// <summary>
+    /// SpriteObject derivative that draws text
+    /// </summary>
+    public class SpriteText : SpriteObject{
 		protected Sprite sprite;			//Sprite to draw with
-		protected D3D.Font font;			//Font to draw with
+		protected Font font;			//Font to draw with
 		protected Rectangle rect;			//Clipping dimensions for the text
 		protected string text;				//text to draw
-		protected DrawTextFormat format;	//Format for drawing
+		protected FontDrawFlags format;	//Format for drawing
 		protected int width,height;			//Space the text will take up
 
 		#region getset
@@ -29,7 +30,7 @@ namespace SpriteUtilities {
 		/// <summary>
 		/// Font used for drawing
 		/// </summary>
-		public D3D.Font DrawFont {
+		public Font DrawFont {
 			get { return font; }
 			set { font=value; }
 		}
@@ -46,7 +47,7 @@ namespace SpriteUtilities {
 		/// <summary>
 		/// Format to pass to DrawText
 		/// </summary>
-		public DrawTextFormat Format {
+		public FontDrawFlags Format {
 			get { return format; }
 			set { format=value; }
 		}
@@ -71,7 +72,7 @@ namespace SpriteUtilities {
 
 		/// <param name="width">Clipping width</param>
 		/// <param name="height">Clipping height</param>
-		public SpriteText(Device device,Sprite sprite,D3D.Font font,int width,int height) : base(device,null) {
+		public SpriteText(Device device,Sprite sprite,Font font,int width,int height) : base(device,null) {
 			//Store sprite and font
 			this.sprite=sprite;
 			this.font=font;
@@ -81,12 +82,12 @@ namespace SpriteUtilities {
 
 			//Set defaults
 			text="";
-			format=DrawTextFormat.None;
-			Tint=Color.Black;
+			format=0;
+			Tint=System.Drawing.Color.Black;
 		}
 
 		public Rectangle Area() {
-			return font.MeasureString(sprite,text,DrawTextFormat.None,Color.White);
+			return font.MeasureText(sprite,text,0);
 		}
 
 		/// <summary>
@@ -95,10 +96,11 @@ namespace SpriteUtilities {
 		/// <param name="trans">Absolute transformation matrix</param>
 		protected override void deviceDraw(Matrix trans) {
 			sprite.Begin(SpriteFlags.AlphaBlend);
-			device.Transform.World=Matrix.Identity;
+			device.SetTransform(TransformState.World, Matrix.Identity);
 			sprite.Transform=trans;
-			font.DrawText(sprite,text,rect,format,Color.FromArgb((int)alpha,color).ToArgb());
-			sprite.End();
+            font.DrawText(sprite, text, rect, format, new SharpDX.Mathematics.Interop.RawColorBGRA(color.B, color.G, color.R, Convert.ToByte(alpha)));
+            //font.DrawText(sprite,text,rect,format,Color.FromArgb((int)alpha,color).ToArgb());
+            sprite.End();
 		}
 	}
 }
