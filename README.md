@@ -1,2 +1,2 @@
 # hoki-hoki
-An attempt to revive Max Abernethy's (of flecko.net) game Hoki Hoki
+Public archive of Max Abernethy's (flecko.net) game Hoki Hoki. 
